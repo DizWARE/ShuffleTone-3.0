@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:background="@color/DarkerGrey" 
+  android:layout_width="fill_parent" 
+  android:layout_height="fill_parent">
+	<TextView 
+		android:layout_width="wrap_content" 
+		android:layout_height="wrap_content" 
+		android:textSize="20px" 
+		android:textColor="@color/White" 
+		android:id="@+id/tv_saveLabel" 
+		android:layout_marginTop="10px" 
+		android:layout_marginLeft="10px" 
+		android:shadowColor = "@color/Black"
+		android:shadowRadius=".4" 
+		android:shadowDx="3" 
+		android:shadowDy="3" android:text="Restore a Playlist">
+		</TextView>
+	<TextView 
+		android:layout_height="wrap_content" 
+		android:id="@+id/tv_saveAdd" 
+		android:textColor="@color/White" 
+		android:layout_below="@id/tv_saveLabel" 
+		android:layout_marginLeft="10px" 
+		android:shadowColor = "@color/Black"
+		android:shadowRadius=".4" 
+		android:shadowDx="3" 
+		android:shadowDy="3" android:layout_width="fill_parent" android:text="Long press on a playlist for list options">
+		</TextView>
+
+
+	<Button 		
+		android:layout_alignParentBottom = "true"
+		android:layout_height="wrap_content" 
+		android:layout_width="150px" 
+		android:layout_marginLeft="10px" 
+		android:id="@+id/btn_ok" android:text="Load">
+		</Button>
+	<Button 
+		android:layout_height="wrap_content" 
+		android:layout_toRightOf="@id/btn_ok" 
+		android:layout_width="150px" 
+		android:layout_alignParentBottom = "true"
+		android:id="@+id/btn_cancel" 
+		android:text="Exit">
+		</Button>
+		
+	<EditText 
+		android:layout_height="wrap_content" 
+		android:id="@+id/et_saveName" 
+		android:layout_centerHorizontal="true" 
+		android:layout_width="300px" 
+		android:layout_above="@id/btn_ok" android:focusable="false" android:clickable="false" android:hint="Click on a list name...">
+		</EditText>
+	<TextView 
+		android:layout_width="wrap_content" 
+		android:layout_height="wrap_content" 
+		android:id="@+id/tv_name" 
+		android:textSize="16px" 
+		android:textColor="@color/White" 
+		android:layout_above = "@id/et_saveName"
+		android:layout_marginBottom="5px" 
+		android:layout_marginLeft="12px" 
+		android:shadowColor = "@color/Black"
+		android:shadowRadius=".4" 
+		android:shadowDx="3" 
+		android:shadowDy="3" android:text="Confirm Everything Here">
+		</TextView>
+
+	<ListView 
+		android:layout_width="wrap_content" 
+		android:id="@+id/lv_saveList" 
+		android:layout_below="@id/tv_saveAdd" 
+		android:background="@color/DarkerGrey" android:layout_height="fill_parent" android:layout_above="@id/tv_name" android:layout_marginBottom="10px" android:layout_marginTop="10px">
+	</ListView>
+	<TextView 
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:gravity="center_vertical|center_horizontal"
+		android:layout_below="@id/tv_saveAdd"
+		android:layout_above ="@id/tv_name"
+		android:textSize="18px" 		
+		android:text="No profiles have been saved...Go ahead and save one(Make sure you have some ringtones set up first)" android:visibility="invisible" android:id="@+id/tv_empty"/>   
+		
+
+
+</RelativeLayout>

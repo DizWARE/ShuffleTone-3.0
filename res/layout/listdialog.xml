@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="wrap_content" android:layout_height="fill_parent">
+<TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/tv_filter" android:text="Select what categories you would like to keep" android:layout_alignParentTop="true" android:layout_centerHorizontal="true" android:gravity="center_horizontal" android:textSize="15px"></TextView><Button android:layout_height="wrap_content" android:id="@+id/btn_ok" android:text="Ok" android:layout_marginLeft="10px" android:layout_alignParentBottom="true" android:layout_width="100px"></Button>
+<ListView android:id="@+id/lv_list" android:layout_width="300px" android:layout_marginLeft="10px" android:layout_height="fill_parent" android:layout_above="@+id/btn_ok" android:layout_below="@id/tv_filter" android:layout_marginTop="10px"></ListView>
+
+
+
+<Button android:id="@+id/btn_noFilter" android:layout_below="@id/lv_list" android:layout_toRightOf="@id/btn_ok" android:layout_width="100px" android:text="Remove Filter" android:layout_height="50px"></Button><Button android:text="Cancel" android:id="@+id/btn_cancel" android:layout_alignParentBottom="true" android:layout_width="100px" android:layout_toRightOf="@id/btn_noFilter" android:layout_height="wrap_content"></Button>
+</RelativeLayout>

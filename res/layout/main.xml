@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout 
+	android:id="@+id/rl_main" 
+	android:layout_width="fill_parent" 
+	android:layout_height="fill_parent" 
+	xmlns:android="http://schemas.android.com/apk/res/android">
+	
+	<RelativeLayout
+		android:id = "@+id/mainLayout"
+		android:layout_width = "fill_parent"
+		android:layout_height = "fill_parent"
+		android:background = "@color/DarkerGrey">
+		
+		#<!-- Add mode Switcher here -->
+		
+		<TextView
+			android:text = "Turn On/Off ShuffleTone"
+			android:id = "@+id/lbl_onoff"
+			android:layout_alignParentLeft = "true"			
+			android:layout_width = "wrap_content"
+			android:layout_height = "wrap_content"
+			android:textSize = "18px"
+			android:textColor = "@color/White"
+			android:shadowColor = "@color/Black"
+			android:shadowDx = "3"
+			android:shadowDy = "3"
+			android:shadowRadius = ".4"
+			android:paddingTop = "10px"
+		/>
+		
+		<ToggleButton 
+			android:id = "@+id/btn_onoff"
+			android:layout_width = "wrap_content"
+			android:layout_height = "wrap_content"
+			android:background = "@drawable/offswitch"
+			android:layout_below = "@id/lbl_onoff"
+			android:textOn = ""
+			android:textOff = ""
+			android:layout_marginLeft = "10px"	
+			android:layout_marginTop = "5px"
+			android:layout_marginBottom = "10px"	 
+		/>
+		
+		<TextView
+			android:text = "Pick Your Ringtones"
+			android:id = "@+id/lbl_filebrowse"
+			android:layout_below = "@id/btn_onoff"
+			android:layout_alignParentLeft = "true"			
+			android:layout_width = "wrap_content"
+			android:layout_height = "wrap_content"
+			android:textSize = "18px"
+			android:textColor = "@color/White"
+			android:shadowColor = "@color/Black"
+			android:shadowDx = "3"
+			android:shadowDy = "3"
+			android:shadowRadius = ".4"
+		/>
+		
+		<Button
+			android:id = "@+id/btn_filebrowse"
+			android:layout_width = "wrap_content"
+			android:layout_height = "wrap_content"
+			android:layout_below = "@id/lbl_filebrowse"
+			android:text = "Pick out ringtone files"
+			android:layout_marginBottom = "15px"
+			/>
+		<TextView
+			android:text = "Backup and Restore Your Lists"
+			android:id = "@+id/lbl_saveload"
+			android:layout_below = "@id/btn_filebrowse"
+			android:layout_alignParentLeft = "true"			
+			android:layout_width = "wrap_content"
+			android:layout_height = "wrap_content"
+			android:textSize = "18px"
+			android:textColor = "@color/White"
+			android:shadowColor = "@color/Black"
+			android:shadowDx = "3"
+			android:shadowDy = "3"
+			android:shadowRadius = ".4"
+		/>
+		
+		<Button
+			android:id = "@+id/btn_save"
+			android:layout_width = "160px"
+			android:layout_height = "wrap_content"
+			android:layout_below = "@id/lbl_saveload"
+			android:text = "Backup your Playlist"
+				
+			android:layout_marginBottom = "0px"		
+			/>
+		<Button
+			android:id = "@+id/btn_load"
+			android:layout_width = "160px"
+			android:layout_height = "wrap_content"
+			android:layout_alignBaseline = "@id/btn_save"
+			android:layout_alignParentRight = "true"
+			android:text = "Restore saved Playlist"	
+			android:layout_marginBottom = "0px"		
+			/>	
+		<LinearLayout
+			android:layout_width ="wrap_content"
+			android:layout_height = "wrap_content"			
+			android:layout_below = "@id/btn_save"
+			android:id = "@+id/ll_donate"
+			>
+			<TextView 
+				android:id = "@+id/tv_donate"
+				android:layout_width = "fill_parent"
+				android:layout_height = "wrap_content"
+				android:text = "@string/nag"
+				android:textColor = "@color/White"
+				android:padding = "5px"
+				android:shadowColor = "@color/Black"
+				android:gravity = "center_horizontal"
+				android:shadowDx = "3"
+				android:shadowDy = "3"
+				android:shadowRadius = ".4"
+				/>
+		</LinearLayout>	
+		
+		<TextView
+			android:text = "Current mode: Call Settings"
+			android:id = "@+id/lbl_mode"
+			android:layout_alignParentLeft = "true"			
+			android:layout_width = "wrap_content"
+			android:layout_height = "wrap_content"
+			android:layout_below = "@id/ll_donate"
+			android:textSize = "18px"
+			android:textColor = "@color/White"
+			android:shadowColor = "@color/Black"
+			android:shadowDx = "3"
+			android:shadowDy = "3"
+			android:shadowRadius = ".4"
+			/>
+		<TextView
+			android:id = "@+id/tv_switcher"
+			android:layout_below = "@id/lbl_mode"
+			android:layout_width = "wrap_content"
+			android:layout_height = "wrap_content"
+			android:background = "@drawable/swiperight"
+			android:textColor = "@color/White"
+			android:textSize = "14px"
+			android:shadowColor = "@color/Black"
+			android:shadowDx = "3"
+			android:shadowDy = "3"
+			android:shadowRadius = ".4"
+			android:gravity = "left"
+			android:layout_marginTop = "5px"
+			android:layout_marginLeft = "15px"
+			/>
+			
+
+	</RelativeLayout>
+	
+	<SlidingDrawer
+		android:id = "@+id/settings"
+		android:orientation = "vertical"
+		android:layout_width = "fill_parent"
+		android:layout_height = "fill_parent"
+		android:handle = "@+id/settingHandle"
+		android:content = "@+id/settingContent"
+	>
+		 <ImageButton 
+		 	android:id = "@+id/settingHandle"
+		 	android:layout_width = "wrap_content"
+		 	android:layout_height = "wrap_content"
+		 	android:background = "@drawable/slidersettings"		 
+		 />
+		 <ScrollView
+		 	android:id = "@+id/settingContent"
+		 	android:layout_width = "fill_parent"
+		 	android:layout_height = "fill_parent"
+		 	android:background = "@color/DarkGrey" 
+		 	>
+		 	<RelativeLayout
+		 		android:layout_width = "fill_parent"
+		 		android:layout_height = "fill_parent"
+		 		android:id = "@+id/rl_settings">
+				<TextView
+					android:id = "@+id/tv_calls"
+					android:text ="Shuffle per call"
+					android:textSize = "16px"
+					android:layout_width = "fill_parent"
+					android:layout_height = "wrap_content"
+					android:textColor = "@color/White"
+					android:shadowColor = "@color/Black"
+					android:shadowDx = "3"
+					android:shadowDy = "3"
+					android:shadowRadius = ".4"
+					android:paddingTop = "5px"
+					android:paddingLeft = "10px"
+					/>
+				<ToggleButton 
+					android:id = "@+id/btn_calls"
+					android:layout_width = "wrap_content"
+					android:layout_height = "wrap_content"
+					android:layout_below = "@id/tv_calls"
+					android:background = "@drawable/offswitch"
+					android:textOn = ""
+					android:textOff = ""	
+					android:layout_marginLeft = "10px" 
+				/>
+				
+				<TextView 
+					android:id = "@+id/tv_numCalls"
+					android:layout_width = "wrap_content"
+					android:layout_height = "wrap_content"
+					android:layout_alignParentRight = "true"
+					android:layout_alignBottom = "@id/btn_calls"
+					android:text = "Number of calls until I shuffle: 1"
+					android:textColor = "@color/White"
+					android:padding = "10px"
+					/>
+					
+				<SeekBar 
+					android:max = "98"	 
+					android:id = "@+id/sb_calls"
+					android:layout_width = "fill_parent"
+					android:layout_height = "wrap_content"
+					android:paddingTop = "10px"
+					android:paddingLeft = "25px"
+					android:paddingRight = "25px"
+					android:progress = "0"
+					android:layout_below = "@id/btn_calls"
+					/>	
+					
+				<TextView
+					android:id = "@+id/tv_hours"
+					android:text ="Shuffle per hour"
+					android:textSize = "16px"
+					android:layout_width = "fill_parent"
+					android:layout_height = "wrap_content"
+					android:layout_below ="@id/sb_calls"
+					android:textColor = "@color/White"
+					android:shadowColor = "@color/Black"
+					android:shadowDx = "3"
+					android:shadowDy = "3"
+					android:shadowRadius = ".4"
+					android:paddingTop = "5px"
+					android:paddingLeft = "10px"
+					/>
+				<ToggleButton 
+					android:id = "@+id/btn_hours"
+					android:layout_width = "wrap_content"
+					android:layout_height = "wrap_content"
+					android:background = "@drawable/offswitch"
+					android:layout_below = "@id/tv_hours"
+					android:textOn = ""
+					android:textOff = ""	
+					android:layout_marginLeft = "10px"			 
+				/>
+				<TextView 
+					android:id = "@+id/tv_numHours"
+					android:layout_width = "wrap_content"
+					android:layout_height = "wrap_content"
+					android:layout_alignParentRight = "true"
+					android:layout_alignBottom = "@id/btn_hours"
+					android:text = "Number of hours until I shuffle: 1"
+					android:textColor = "@color/White"
+					android:padding = "10px"
+					/>
+				
+				<SeekBar 
+					android:max = "23"	 
+					android:id = "@+id/sb_hours"
+					android:layout_width = "fill_parent"
+					android:layout_height = "wrap_content"
+					android:paddingTop = "10px"
+					android:paddingLeft = "25px"
+					android:paddingRight = "25px"
+					android:progress = "0"
+					android:layout_below = "@id/btn_hours"
+					/>
+				<RelativeLayout
+					android:id = "@+id/rl_delay"
+					android:layout_width = "wrap_content"
+					android:layout_height = "wrap_content"
+					android:layout_below = "@id/sb_hours">
+				<TextView
+					android:id = "@+id/lbl_delay"
+					android:text ="Limit play time"
+					android:textSize = "16px"
+					android:layout_width = "fill_parent"
+					android:layout_height = "wrap_content"
+					
+					android:textColor = "@color/White"
+					android:shadowColor = "@color/Black"
+					android:shadowDx = "3"
+					android:shadowDy = "3"
+					android:shadowRadius = ".4"
+					android:paddingTop = "5px"
+					android:paddingLeft = "10px"
+					/>
+				<ToggleButton 
+					android:id = "@+id/btn_delay"
+					android:layout_width = "wrap_content"
+					android:layout_height = "wrap_content"
+					android:layout_below = "@id/lbl_delay"
+					android:background = "@drawable/offswitch"
+					android:textOn = ""
+					android:textOff = ""	
+					android:layout_marginLeft = "10px" 
+				/>
+				
+				<TextView 
+					android:id = "@+id/tv_delay"
+					android:layout_width = "wrap_content"
+					android:layout_height = "wrap_content"
+					android:layout_alignParentRight = "true"
+					android:layout_alignBottom = "@id/btn_delay"
+					android:text = "Number of calls until I shuffle: 1"
+					android:textColor = "@color/White"
+					android:padding = "10px"
+					/>
+					
+				<SeekBar 
+					android:max = "59"	 
+					android:id = "@+id/sb_delay"
+					android:layout_width = "fill_parent"
+					android:layout_height = "wrap_content"
+					android:paddingTop = "10px"
+					android:paddingLeft = "25px"
+					android:paddingRight = "25px"
+					android:progress = "0"
+					android:layout_below = "@id/tv_delay"
+					/>
+				</RelativeLayout>
+					
+				<TextView
+					android:id = "@+id/lbl_help"
+					android:text ="Help Options"
+					android:textSize = "16px"
+					android:layout_width = "fill_parent"
+					android:layout_height = "wrap_content"
+					android:layout_below ="@id/rl_delay"
+					android:textColor = "@color/White"
+					android:shadowColor = "@color/Black"
+					android:shadowDx = "3"
+					android:shadowDy = "3"
+					android:shadowRadius = ".4"
+					android:paddingTop = "10px"
+					android:paddingLeft = "10px"
+					/>
+				<Button 
+					android:id = "@+id/btn_instruct"
+					android:text = "Tutorial"
+					android:layout_below = "@id/lbl_help"
+					android:layout_alignParentLeft = "true"
+					android:layout_width = "100px"
+					android:layout_height = "wrap_content"
+					android:layout_marginLeft = "10px"
+					/>
+				<Button 
+					android:id = "@+id/btn_faq"
+					android:text = "FAQ"
+					android:layout_below = "@id/lbl_help"
+					android:layout_centerHorizontal = "true"
+					android:layout_width = "100px"
+					android:layout_height = "wrap_content"
+					/>
+				<Button 
+					android:id = "@+id/btn_email"
+					android:text = "Email Dev"
+					android:layout_below = "@id/lbl_help"
+					android:layout_alignParentRight = "true"
+					android:layout_width = "100px"
+					android:layout_height = "wrap_content"
+					android:layout_marginRight = "10px"
+					/>
+			</RelativeLayout>
+
+		 </ScrollView>
+	</SlidingDrawer>	 
+	
+
+</RelativeLayout>

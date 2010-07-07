@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content"
+  android:background = "@color/DarkerGrey">
+  
+  
+  
+<SlidingDrawer
+		android:id = "@+id/acceptDrawer"
+		android:orientation = "horizontal"
+		android:layout_width = "fill_parent"
+		android:layout_height = "120px"
+		android:layout_centerVertical = "true"
+		android:handle = "@+id/acceptHandle"
+		android:content = "@+id/acceptContent"
+		 >
+		 <ImageButton 
+		 	android:id = "@+id/acceptHandle"
+		 	android:layout_width = "wrap_content"
+		 	android:layout_height = "120px"
+		 	android:background = "@drawable/slideraccept"
+		 
+		 />
+		 <RelativeLayout 
+		 	android:id = "@+id/acceptContent"
+		 	android:layout_width = "fill_parent"
+		 	android:layout_height = "fill_parent"
+		 	android:background = "@color/DarkGrey" 
+		 	>
+		 	
+			<TextView
+				android:text = "@string/accept"
+				android:id = "@+id/lbl_accept"
+				android:layout_centerHorizontal = "true"	
+				android:layout_width = "wrap_content"
+				android:layout_height = "wrap_content"
+				android:textSize = "20px"
+				android:textColor = "@color/White"
+				android:shadowColor = "@color/Black"
+				android:shadowDx = "3"
+				android:shadowDy = "3"
+				android:shadowRadius = ".4"
+			/>
+			<Button
+				android:id = "@+id/btn_ok"
+				android:text = "OK"
+				android:layout_below = "@id/lbl_accept"
+				android:layout_alignParentLeft = "true"
+				android:layout_width = "100px"
+				android:layout_height = "wrap_content"
+				/>
+			<Button
+				android:id = "@+id/btn_cancel"
+				android:text = "Cancel"
+				android:layout_alignParentRight = "true"
+				android:layout_below = "@id/lbl_accept"
+				android:layout_width = "100px"
+				android:layout_height = "wrap_content"
+				/>
+		 	
+		 	</RelativeLayout>
+		 </SlidingDrawer>  
+  <SlidingDrawer
+		android:id = "@+id/sortDrawer"
+		android:orientation = "vertical"
+		android:layout_width = "fill_parent"
+		android:layout_height = "fill_parent"
+		android:handle = "@+id/sortHandle"
+		android:content = "@+id/sortContent"
+		 >
+		 <ImageButton 
+		 	android:id = "@+id/sortHandle"
+		 	android:layout_width = "wrap_content"
+		 	android:layout_height = "wrap_content"
+		 	android:background = "@drawable/slidersort"
+		 
+		 />
+		 <RelativeLayout 
+		 	android:id = "@+id/sortContent"
+		 	android:layout_width = "fill_parent"
+		 	android:layout_height = "fill_parent"
+		 	android:background = "@color/DarkGrey" 
+		 	>
+			<TextView
+				android:text = "Sort By:"
+				android:id = "@+id/lbl_sort"
+				android:layout_width = "wrap_content"
+				android:layout_height = "wrap_content"
+				android:textSize = "20px"
+				android:paddingLeft = "10px"
+				android:paddingTop = "10px"
+				android:textColor = "@color/White"
+				android:shadowColor = "@color/Black"
+				android:shadowDx = "3"
+				android:shadowDy = "3"
+				android:shadowRadius = ".4"
+			/>
+			<Button 
+				android:text = "Artist"
+				android:id ="@+id/btn_artist"
+				android:layout_width ="150px"
+				android:layout_height = "wrap_content"
+				android:layout_below ="@id/lbl_sort"
+				android:layout_marginLeft = "10px"
+				/>
+			<Button 
+				android:text = "Title"
+				android:id ="@+id/btn_title"
+				android:layout_width ="150px"
+				android:layout_height = "wrap_content"
+				android:layout_toRightOf ="@id/btn_artist"
+				android:layout_alignBottom = "@id/btn_artist"
+				android:paddingLeft = "10px"
+				/>
+			<Button 
+				android:text = "Filepath"
+				android:id ="@+id/btn_filepath"
+				android:layout_width ="150px"
+				android:layout_height = "wrap_content"
+				android:layout_below ="@id/btn_artist"
+				android:layout_marginLeft = "10px"
+				/>
+			<Button 
+				android:text = "Duration"
+				android:id ="@+id/btn_duration"
+				android:layout_width ="150px"
+				android:layout_height = "wrap_content"
+				android:layout_toRightOf ="@id/btn_filepath"
+				android:layout_alignBottom = "@id/btn_filepath"
+				/>
+			<TextView
+				android:text = "Filter results by:"
+				android:id = "@+id/lbl_filter"
+				android:layout_width = "wrap_content"
+				android:layout_height = "wrap_content"
+				android:textSize = "20px"
+				android:paddingLeft = "10px"
+				android:paddingTop = "10px"
+				android:textColor = "@color/White"
+				android:shadowColor = "@color/Black"
+				android:shadowDx = "3"
+				android:shadowDy = "3"
+				android:shadowRadius = ".4"
+				android:layout_below ="@id/btn_filepath"
+			/>
+			<Button 
+				android:text = "Artist"
+				android:id ="@+id/btn_fArtist"
+				android:layout_width ="100px"
+				android:layout_height = "wrap_content"
+				android:layout_below ="@id/lbl_filter"
+				
+				android:layout_marginLeft = "10px"
+				/>
+			<Button 
+				android:text = "Filepath"
+				android:id ="@+id/btn_fFilepath"
+				android:layout_width ="100px"
+				android:layout_height = "wrap_content"
+				android:layout_toRightOf ="@id/btn_fArtist"
+				android:layout_alignBottom = "@id/btn_fArtist"
+				android:paddingLeft = "10px"
+				/>
+			<Button 
+				android:text = "Type of File"
+				android:id ="@+id/btn_fType"
+				android:layout_width ="100px"
+				android:layout_height = "wrap_content"
+				android:layout_toRightOf ="@id/btn_fFilepath"
+				android:layout_alignBottom = "@id/btn_fArtist"
+				android:paddingLeft = "10px"
+				/>
+			<TextView
+				android:text = "Check/Uncheck Results:"
+				android:id = "@+id/lbl_check"
+				android:layout_below = "@id/btn_fType"
+				android:layout_width = "wrap_content"
+				android:layout_height = "wrap_content"
+				android:textSize = "20px"
+				android:paddingLeft = "10px"
+				android:paddingTop = "10px"
+				android:textColor = "@color/White"
+				android:shadowColor = "@color/Black"
+				android:shadowDx = "3"
+				android:shadowDy = "3"
+				android:shadowRadius = ".4"
+			/>
+			<Button 
+				android:text = "Check All"
+				android:id ="@+id/btn_check"
+				android:layout_width ="150px"
+				android:layout_height = "wrap_content"
+				android:layout_below ="@id/lbl_check"
+				android:layout_marginLeft = "10px"
+				/>
+			<Button 
+				android:text = "Uncheck All"
+				android:id ="@+id/btn_uncheck"
+				android:layout_width ="150px"
+				android:layout_height = "wrap_content"
+				android:layout_toRightOf ="@id/btn_check"
+				android:layout_alignBottom = "@id/btn_check"
+				android:paddingLeft = "10px"
+				/>
+			<TextView
+				android:id = "@+id/tv_counters"
+				android:layout_below = "@id/btn_check"
+				android:layout_width = "fill_parent"
+				android:layout_height = "fill_parent"
+				android:padding = "10px"
+				android:textColor = "@color/White"
+				android:textSize = "12px"
+			/>
+		 	
+		 	</RelativeLayout>
+	</SlidingDrawer>
+  
+  	<ListView
+		android:id = "@+id/android:list" 
+		android:layout_width = "wrap_content"
+		android:layout_height = "wrap_content"
+		android:layout_toLeftOf = "@id/acceptHandle"
+		android:layout_marginRight = "37px"
+		android:layout_marginBottom = "37px"
+		android:scrollingCache = "true"
+		android:fastScrollEnabled = "true"
+		android:background = "@color/DarkerGrey"
+		/>
+  
+</RelativeLayout>

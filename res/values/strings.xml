@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <string name="app_name">ShuffleTone 2.0</string>
+<string name="accept">&quot; Are you sure want to\naccept these changes?</string>
+<string name="version">2.0.2</string>
+<string name="nag">Dig my stuff? Show your appreciation by Donating. Press MENU and click DONATE.\nPress MENU to remove this NAG.</string>
+</resources>
