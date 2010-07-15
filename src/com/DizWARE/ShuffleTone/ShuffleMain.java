@@ -47,7 +47,6 @@ public class ShuffleMain extends Activity
 	
 	Button btn_filebrowse;
 	Button btn_save;
-	Button btn_load;
 	Button btn_instruct;
 	Button btn_faq;
 	Button btn_email;
@@ -153,7 +152,6 @@ public class ShuffleMain extends Activity
         
         btn_filebrowse = (Button)findViewById(R.id.btn_filebrowse);
         btn_save = (Button)findViewById(R.id.btn_save);
-        btn_load = (Button)findViewById(R.id.btn_load);
         
         btn_instruct = (Button)findViewById(R.id.btn_instruct); 
         btn_faq = (Button)findViewById(R.id.btn_faq);
@@ -286,23 +284,6 @@ public class ShuffleMain extends Activity
 			public void onClick(View v) 
 			{
 				Intent intent = new Intent(ShuffleMain.this,SaveActivity.class);
-				intent.putExtra("writeCode", writeCode);
-				
-				startActivity(intent);
-			}
-        	
-        });
-        
-        /***
-         * Opens the loading activity
-         */
-        btn_load.setOnClickListener(new OnClickListener()
-        {
-
-			@Override
-			public void onClick(View v) 
-			{
-				Intent intent = new Intent(ShuffleMain.this,LoadActivity.class);
 				intent.putExtra("writeCode", writeCode);
 				
 				startActivity(intent);

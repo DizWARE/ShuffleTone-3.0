@@ -153,6 +153,14 @@ public class SaveActivity extends Activity
 			else
 				Toast.makeText(this, "No name in text", Toast.LENGTH_SHORT).show();
 		}
+		//Load button
+		else if(btn.getText().toString().equalsIgnoreCase("Load"))
+		{			
+			if(et_save.getText().length() > 0)
+				loadList();
+			else
+				Toast.makeText(this, "No File to Load", Toast.LENGTH_SHORT).show();			
+		}
 		
 		//Rename button
 		else if(btn.getText().toString().equalsIgnoreCase("Rename"))
@@ -172,6 +180,35 @@ public class SaveActivity extends Activity
 		
 		//Resets interface
 		resetButtons();
+		
+	}
+	
+	/***
+	 * Loads the playlist
+	 */
+	public void loadList()
+	{		
+		//if there is not a name; exit the load process
+		if(et_save.getText().length() == 0)
+			return;		
+
+		String loadResults = "Loaded Successfully";	
+		
+		try {
+			ArrayList<Ringtone> ringtones = XMLReader.readFile(
+					new File("/sdcard/ShuffleTone/" + 
+							selectedView.getText().toString() + ".xml"));
+			FileBrowser.fixLoadedMedia(ringtones,this);			
+			
+			XMLWriter.writeFile(ringtones, XMLReader.getDefaultFile(writeCode));
+			Shuffler.runShuffle(this, writeCode, ringtones);
+		} catch (Exception e) { loadResults = "Failed Load";	}
+		
+		
+		//Resets the text to be empty		
+		Toast.makeText(this, loadResults, Toast.LENGTH_LONG).show();
+		et_save.setText("");
+		Toast.makeText(this, loadResults, Toast.LENGTH_LONG).show();
 		
 	}
 	
@@ -204,6 +241,7 @@ public class SaveActivity extends Activity
 	public void onCreateContextMenu(ContextMenu menu, View v,
 			ContextMenuInfo menuInfo) 
 	{
+		menu.add("Load");
 		menu.add("Overwrite");
 		menu.add("Delete");
 		menu.add("Rename");
@@ -226,6 +264,12 @@ public class SaveActivity extends Activity
 		if(item.getTitle().toString().equalsIgnoreCase("Overwrite"))
 		{
 			et_save.setText(selectedView.getText());
+			btn_cancel.setText("Cancel");
+		}
+		else if(item.getTitle().toString().equalsIgnoreCase("Load"))
+		{
+			et_save.setText("Loading " + selectedView.getText());
+			btn_ok.setText("Load");
 			btn_cancel.setText("Cancel");
 		}
 		//Delete
@@ -321,7 +365,7 @@ public class SaveActivity extends Activity
 			String word = text.toString();
 			char c = text.charAt(text.length()-1);
 			
-			//If the character is a letter or a digit
+			//If the character is not a letter or a digit
 			if(!Character.isLetterOrDigit(c))
 			{
 				//subtract the last character
@@ -415,6 +459,24 @@ public class SaveActivity extends Activity
 					
 					return false;
 				}   			
+    		});
+    		
+    		/***
+    		 * On click listener for the menu items
+    		 */
+    		tv_saveRow.setOnClickListener(new OnClickListener()
+    		{
+				@Override
+				public void onClick(View v) 
+				{
+					TextView tv = (TextView)v;
+					et_save.setText("Loading " + tv.getText());	
+					et_save.setTextColor(Color.RED);
+					selectedView = tv;
+					btn_ok.setText("Load");
+					btn_cancel.setText("Cancel");
+				}
+    			
     		});
     		
     		context.registerForContextMenu(tv_saveRow);
