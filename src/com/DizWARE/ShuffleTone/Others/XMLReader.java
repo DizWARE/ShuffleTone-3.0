@@ -1,4 +1,4 @@
-package com.DizWARE.ShuffleTone;
+package com.DizWARE.ShuffleTone.Others;
 
 import java.io.File;
 import java.io.FileReader;

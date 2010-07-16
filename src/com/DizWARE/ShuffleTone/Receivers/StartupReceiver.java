@@ -6,7 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
-import com.DizWARE.ShuffleTone.ResetAlarms;
+import com.DizWARE.ShuffleTone.Others.ResetAlarms;
 
 /***
  * Receives the system starting up

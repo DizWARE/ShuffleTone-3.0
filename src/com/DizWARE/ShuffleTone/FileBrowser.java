@@ -5,6 +5,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+import com.DizWARE.ShuffleTone.Others.Ringtone;
+import com.DizWARE.ShuffleTone.Others.Shuffler;
+import com.DizWARE.ShuffleTone.Others.UserDialogs;
+import com.DizWARE.ShuffleTone.Others.XMLReader;
+import com.DizWARE.ShuffleTone.Others.XMLWriter;
+
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ListActivity;

@@ -1,5 +1,11 @@
 package com.DizWARE.ShuffleTone;
 
+import com.DizWARE.ShuffleTone.Others.PreferenceWriter;
+import com.DizWARE.ShuffleTone.Others.ResetAlarms;
+import com.DizWARE.ShuffleTone.Others.Shuffler;
+import com.DizWARE.ShuffleTone.Others.SwipeControls;
+import com.DizWARE.ShuffleTone.Others.UserDialogs;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -74,7 +80,7 @@ public class ShuffleMain extends Activity
 	
 	View[] viewCopy;
 	
-	String writeCode;
+	public String writeCode;
 	String type = "call";
 	boolean canSwitch = true;
 	

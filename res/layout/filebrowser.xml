@@ -11,11 +11,11 @@
 		android:id = "@+id/acceptDrawer"
 		android:orientation = "horizontal"
 		android:layout_width = "fill_parent"
-		android:layout_height = "120px"
+		android:layout_height = "300px"
 		android:layout_centerVertical = "true"
 		android:handle = "@+id/acceptHandle"
 		android:content = "@+id/acceptContent"
-		 >
+		 >		 
 		 <ImageButton 
 		 	android:id = "@+id/acceptHandle"
 		 	android:layout_width = "wrap_content"
@@ -29,6 +29,37 @@
 		 	android:layout_height = "fill_parent"
 		 	android:background = "@color/DarkGrey" 
 		 	>
+		 <TextView 
+		 	android:layout_width = "wrap_content"
+		 	android:layout_height = "wrap_content"
+	 		android:id = "@+id/lbl_type"
+			android:layout_centerHorizontal = "true"
+			android:textSize = "20px"
+			android:textColor = "@color/White"
+			android:text = "What type of list is this?\n(Pick one or both)"
+			
+			android:shadowColor = "@color/Black"
+			android:shadowDx = "3"
+			android:shadowDy = "3"
+			android:shadowRadius = ".4"/>
+		<ToggleButton 
+			android:textOn = "Calls"
+			android:textOff = "Calls"
+			android:textColor = "@color/White"
+			android:background = "@drawable/selectbox_unchecked"			
+			android:layout_width = "wrap_content"
+			android:layout_height = "wrap_content"
+			android:layout_below = "@id/lbl_type"
+			android:id = "@+id/tb_calls"/>
+		<ToggleButton 
+			android:text = "Texts"
+			android:textColor = "@color/White"
+			android:button = "@drawable/selectbox_unchecked"
+			android:layout_width = "wrap_content"
+			android:layout_height = "wrap_content"
+			android:layout_below = "@id/lbl_type"
+			android:layout_toRightOf = "@id/tb_calls"
+			android:id = "@+id/tb_texts"/>
 		 	
 			<TextView
 				android:text = "@string/accept"
@@ -42,6 +73,7 @@
 				android:shadowDx = "3"
 				android:shadowDy = "3"
 				android:shadowRadius = ".4"
+				android:layout_below = "@id/tb_calls"
 			/>
 			<Button
 				android:id = "@+id/btn_ok"
@@ -74,8 +106,7 @@
 		 	android:id = "@+id/sortHandle"
 		 	android:layout_width = "wrap_content"
 		 	android:layout_height = "wrap_content"
-		 	android:background = "@drawable/slidersort"
-		 
+		 	android:background = "@drawable/slidersort"		 
 		 />
 		 <RelativeLayout 
 		 	android:id = "@+id/sortContent"

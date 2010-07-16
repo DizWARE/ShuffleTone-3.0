@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.telephony.TelephonyManager;
 
-import com.DizWARE.ShuffleTone.PreferenceWriter;
+import com.DizWARE.ShuffleTone.Others.PreferenceWriter;
 import com.DizWARE.ShuffleTone.Services.ShuffleService;
 
 /***

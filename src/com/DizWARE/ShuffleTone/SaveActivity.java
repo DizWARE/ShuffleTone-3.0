@@ -3,6 +3,11 @@ package com.DizWARE.ShuffleTone;
 import java.io.File;
 import java.util.ArrayList;
 
+import com.DizWARE.ShuffleTone.Others.Ringtone;
+import com.DizWARE.ShuffleTone.Others.Shuffler;
+import com.DizWARE.ShuffleTone.Others.XMLReader;
+import com.DizWARE.ShuffleTone.Others.XMLWriter;
+
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;

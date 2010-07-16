@@ -13,10 +13,10 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.provider.MediaStore;
 
-import com.DizWARE.ShuffleTone.PreferenceWriter;
 import com.DizWARE.ShuffleTone.ShuffleMain;
-import com.DizWARE.ShuffleTone.Shuffler;
 import com.DizWARE.ShuffleTone.Managers.CallManager;
+import com.DizWARE.ShuffleTone.Others.PreferenceWriter;
+import com.DizWARE.ShuffleTone.Others.Shuffler;
 
 /***
  * Service that does all the cool shuffling stuff.

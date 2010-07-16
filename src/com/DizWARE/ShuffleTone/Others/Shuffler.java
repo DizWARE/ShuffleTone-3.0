@@ -1,4 +1,4 @@
-package com.DizWARE.ShuffleTone;
+package com.DizWARE.ShuffleTone.Others;
 
 import java.util.ArrayList;
 import java.util.Collections;

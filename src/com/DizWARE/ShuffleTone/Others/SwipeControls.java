@@ -1,7 +1,9 @@
-package com.DizWARE.ShuffleTone;
+package com.DizWARE.ShuffleTone.Others;
 
 import android.view.MotionEvent;
 import android.view.GestureDetector.SimpleOnGestureListener;
+
+import com.DizWARE.ShuffleTone.*;
 
 /***
  * This class handles a left and right swipe. In this case, it actually

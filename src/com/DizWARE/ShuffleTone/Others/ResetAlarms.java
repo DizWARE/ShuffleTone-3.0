@@ -1,4 +1,4 @@
-package com.DizWARE.ShuffleTone;
+package com.DizWARE.ShuffleTone.Others;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
