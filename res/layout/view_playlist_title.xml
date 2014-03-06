@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content">
+  <ImageButton 
+	android:layout_width="wrap_content"
+  	android:layout_height="wrap_content"  	
+  	android:background ="@android:drawable/ic_input_add"
+  	android:layout_alignParentLeft = "true"
+  	android:id = "@+id/ib_add"/>
+  <TextView 
+    android:layout_width="wrap_content"
+  	android:layout_height="wrap_content"
+  	android:layout_alignTop="@id/ib_add"
+  	android:layout_marginTop="10dip"
+  	android:textColor="@color/White"
+  	android:textStyle="bold"
+  	android:id="@+id/tv_add"
+  	android:layout_toRightOf = "@id/ib_add"
+  	android:text = "Add/Remove Tones From Playlist"/>
+  <TextView
+      android:layout_width="wrap_content"
+  	  android:layout_height="wrap_content"
+  	  android:layout_below="@id/tv_add"
+  	  android:layout_toRightOf = "@id/ib_add"
+  	  android:id="@+id/tv_ringtoneCount"
+  	  android:textStyle="bold"
+  	  android:text="Ringtone Count: 0"/>
+  <ImageView
+  	android:layout_width="fill_parent"
+  	android:layout_height="wrap_content"
+  	android:src="@drawable/seperator"
+  	android:layout_below="@id/tv_ringtoneCount"/>
+</RelativeLayout>

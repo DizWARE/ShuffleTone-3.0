@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content">
+  <TextView
+      android:layout_width="fill_parent"
+  	  android:layout_height="wrap_content"
+  	  android:layout_marginTop="5dip"
+  	  android:gravity="center_horizontal" 	  
+  	  android:textStyle="bold"
+  	  android:textColor="@color/White"
+  	  android:textSize="20dip"
+  	  android:id="@+id/tv_instructionTitle"
+  	  android:text="Setup Instruction"/>
+  <ScrollView
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:padding="15dip"
+	android:layout_marginBottom="10dip"
+	android:layout_below="@id/tv_instructionTitle"	>
+	  <TextView 
+	  	android:layout_width="wrap_content"
+		android:layout_height="wrap_content"	
+		android:layout_margin = "5dip"
+		android:text="@string/instructions"
+		android:textColor="@color/White"
+		android:id = "@+id/tv_name"
+		android:layout_toRightOf = "@id/tb_add_filter"/>
+  </ScrollView>
+</RelativeLayout>
+

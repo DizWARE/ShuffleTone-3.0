@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content"
+  android:orientation = "vertical">
+  <TextView 
+    android:layout_width="wrap_content"
+  	android:layout_height="wrap_content"
+	style = "@style/MainMarginsLand"
+  	android:text = ">  Turn On/Off ShuffleTone"
+  	android:textColor = "@android:color/white"
+  	android:textSize = "24dip"
+  	android:id = "@+id/tv_powerStation"/>
+  
+  <TextView 
+    android:layout_width="wrap_content"
+  	android:layout_height="wrap_content"
+	style = "@style/MainMarginsLand"
+  	android:text = ">  Pick out your tones"
+  	android:textColor = "@android:color/white"
+  	android:textSize = "24dip"
+  	android:id = "@+id/tv_filebrowser"/>
+  
+  <TextView 
+    android:layout_width="wrap_content"
+  	android:layout_height="wrap_content"
+	style = "@style/MainMarginsLand"
+  	android:text = ">  View/Edit current playlist"
+  	android:textColor = "@android:color/white"
+  	android:textSize = "24dip"
+  	android:id = "@+id/tv_viewCurrent"/>
+  
+  <TextView 
+    android:layout_width="wrap_content"
+  	android:layout_height="wrap_content"
+	style = "@style/MainMarginsLand"
+  	android:text = ">  Backup/Restore a list"
+  	android:textColor = "@android:color/white"
+  	android:textSize = "24dip"
+  	android:id = "@+id/tv_backup"/>
+  
+   <TextView
+     android:id="@+id/tv_test"
+     style = "@style/MainMarginsLand"
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+     android:text="> Test TextTone Shuffle"
+     android:textColor="@android:color/white"
+     android:textSize="24dip" />
+</LinearLayout>

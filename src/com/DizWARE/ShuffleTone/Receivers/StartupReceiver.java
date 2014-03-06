@@ -1,29 +1,20 @@
 package com.DizWARE.ShuffleTone.Receivers;
 
 
+import com.DizWARE.ShuffleTone.Others.Constants;
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-
-import com.DizWARE.ShuffleTone.ResetAlarms;
 
 /***
- * Receives the system starting up
+ * Receiver that catches when the boot has completed. This will restart the shuffle alarms for calls and texts
  * 
- * Basically resets the alarms if the user has alarms set up.
- * @author diz
+ * @author Tyler Robinson
  */
-public class StartupReceiver extends BroadcastReceiver 
-{
-	SharedPreferences settings;
-	
-	/***
-	 * Receives the startup
-	 */
-	@Override
-	public void onReceive(Context context, Intent intent) 
-	{
-		ResetAlarms.SetAlarms(context, intent,3);		
+public class StartupReceiver extends BroadcastReceiver {
+	@Override public void onReceive(Context context, Intent intent) {		
+		AlarmReceiver.startAlarm(context, Constants.TYPE_CALLS);
+		AlarmReceiver.startAlarm(context, Constants.TYPE_TEXTS);
 	}
 }

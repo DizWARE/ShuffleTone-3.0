@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent">
+  <TextView
+  	android:layout_width = "fill_parent"
+  	android:layout_height = "wrap_content"
+  	android:layout_marginLeft = "10dip"
+  	android:layout_marginBottom = "20dip"
+  	android:text = "> Setup Instructions"
+  	android:textColor = "@color/White"
+  	android:textSize = "22dip"
+  	android:id = "@+id/tv_setup"/>
+  <TextView
+  	android:layout_width = "fill_parent"
+  	android:layout_height = "wrap_content"
+  	android:layout_marginLeft = "10dip"
+  	android:layout_marginBottom = "20dip"
+  	android:layout_below = "@id/tv_setup"
+  	android:text = "> Text Shuffle is not working"
+  	android:textColor = "@color/White"
+  	android:textSize = "22dip"
+  	android:id = "@+id/tv_problems"/>
+  <TextView
+  	android:layout_width = "fill_parent"
+  	android:layout_height = "wrap_content"
+  	android:layout_marginLeft = "10dip"
+  	android:layout_marginBottom = "20dip"
+  	android:layout_below = "@id/tv_problems"
+  	android:text = "> FAQ"
+  	android:textColor = "@color/White"
+  	android:textSize = "22dip"
+  	android:id = "@+id/tv_faq"/>
+ <TextView
+  	android:layout_width = "fill_parent"
+  	android:layout_height = "wrap_content"
+  	android:layout_marginLeft = "10dip"
+  	android:layout_marginBottom = "20dip"
+  	android:layout_below = "@id/tv_faq"
+  	android:text = "> Contact Developer"
+  	android:textColor = "@color/White"
+  	android:textSize = "22dip"
+  	android:id = "@+id/tv_contact"/>  
+ <TextView
+  	android:layout_width = "fill_parent"
+  	android:layout_height = "wrap_content"
+  	android:layout_marginLeft = "10dip"
+  	android:layout_marginBottom = "20dip"
+  	android:layout_below = "@id/tv_contact"
+  	android:text = " "
+  	android:textColor = "@color/White"
+  	android:textSize = "22dip"/>
+</RelativeLayout>

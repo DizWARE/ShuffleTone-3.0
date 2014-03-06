@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent">
+  <TextView
+  	android:layout_width = "fill_parent"
+  	android:layout_height = "wrap_content"
+  	android:layout_marginLeft = "10dip"
+  	android:layout_marginBottom = "20dip"
+  	android:text = "> Shuffle When For Calls?"
+  	android:textColor = "@color/White"
+  	android:textSize = "22dip"
+  	android:id = "@+id/tv_wCalls"/>
+  <TextView
+  	android:layout_width = "fill_parent"
+  	android:layout_height = "wrap_content"
+  	android:layout_marginLeft = "10dip"
+  	android:layout_marginBottom = "20dip"
+  	android:layout_below = "@id/tv_wCalls"
+  	android:text = "> Shuffle When For Texts?"
+  	android:textColor = "@color/White"
+  	android:textSize = "22dip"
+  	android:id = "@+id/tv_wTexts"/>
+  <TextView
+  	android:layout_width = "fill_parent"
+  	android:layout_height = "wrap_content"
+  	android:layout_marginLeft = "10dip"
+  	android:layout_marginBottom = "20dip"
+  	android:layout_below = "@id/tv_wTexts"
+  	android:text = "> Help"
+  	android:textColor = "@color/White"
+  	android:textSize = "22dip"
+  	android:id = "@+id/tv_help"/>
+ <TextView
+  	android:layout_width = "fill_parent"
+  	android:layout_height = "wrap_content"
+  	android:layout_marginLeft = "10dip"
+  	android:layout_marginBottom = "20dip"
+  	android:layout_below = "@id/tv_help"
+  	android:text = "> Contact Developer"
+  	android:textColor = "@color/White"
+  	android:textSize = "22dip"
+  	android:id = "@+id/tv_contact"/>
+ <TextView
+  	android:layout_width = "fill_parent"
+  	android:layout_height = "wrap_content"
+  	android:layout_marginLeft = "10dip"
+  	android:layout_marginBottom = "20dip"
+  	android:layout_below = "@id/tv_contact"
+  	android:text = " "
+  	android:textColor = "@color/White"
+  	android:textSize = "22dip"/>
+  
+</RelativeLayout>

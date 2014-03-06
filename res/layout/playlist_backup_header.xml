@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content">
+  <ImageButton 
+	android:layout_width="wrap_content"
+  	android:layout_height="wrap_content"  	
+  	android:background ="@android:drawable/ic_input_add"
+  	android:layout_alignParentLeft = "true"
+  	android:id = "@+id/ib_add"/>
+  <TextView 
+  	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:layout_marginLeft = "5dip"	
+	android:layout_marginRight = "10dip"
+	android:layout_marginTop="5dip"
+	android:layout_toRightOf="@id/ib_add"
+	android:textStyle = "bold"
+	android:text = "Backup Current Playlist"
+	android:textSize = "20dip"
+	android:id = "@+id/tv_name"/>
+ <ImageView
+  	android:layout_width="fill_parent"
+  	android:layout_height="wrap_content"
+  	android:src="@drawable/seperator"
+  	android:layout_below="@id/ib_add"
+  	android:scaleType="fitXY"/>
+</RelativeLayout>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content">
+  <TextView
+  	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:layout_marginLeft = "15dip"
+	android:layout_marginRight = "15dip"
+	android:layout_marginBottom = "5dip"
+	android:textSize = "18dip"		
+	android:textColor = "@android:color/white"
+	android:id = "@+id/tv_hint"/>
+  <LinearLayout	
+    android:layout_width="wrap_content"
+  	android:layout_height="wrap_content"
+  	android:orientation = "horizontal"
+  	android:layout_centerHorizontal = "true"
+  	android:layout_below = "@id/tv_hint"
+  	android:id = "@+id/ll_type">
+	  <ToggleButton 
+	  	android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_margin = "5dip"
+		android:background = "@drawable/selectbox_unchecked"		
+		android:textOff = ""
+		android:textOn = ""
+		android:id = "@+id/tb_calls" />
+	  <TextView
+	  	android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginRight = "35dip"	
+		android:layout_marginLeft = "5dip"
+		android:layout_marginTop = "5dip"
+		android:text = "Calls"
+		android:textSize = "20dip"		
+		android:textColor = "@android:color/white"
+		android:id = "@+id/tv_calls"/>
+	  <ToggleButton 
+	  	android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_margin = "5dip"
+		android:background = "@drawable/selectbox_unchecked"
+		android:textOff = ""
+		android:textOn = ""
+		android:id = "@+id/tb_texts" />
+	  <TextView
+	  	android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_margin = "5dip"		
+		android:text = "Texts"
+		android:textSize = "20dip"
+		android:textColor = "@android:color/white"
+		android:id = "@+id/tv_texts" />
+  </LinearLayout>
+  <LinearLayout	
+    android:layout_width="wrap_content"
+  	android:layout_height="wrap_content"
+  	android:orientation = "horizontal"
+  	android:layout_centerHorizontal = "true"  	
+	android:layout_marginTop = "5dip"
+  	android:layout_below = "@id/ll_type"
+  	android:id = "@+id/ll_controls">
+	  <Button
+	  	android:layout_width="125dip"
+		android:layout_height="wrap_content"
+		android:layout_margin = "5dip"
+		android:text = "OK"
+		android:id = "@+id/btn_ok" />
+	  <Button
+	  	android:layout_width="125dip"
+		android:layout_height="wrap_content"
+		android:layout_margin = "5dip"
+		android:text = "Cancel"
+		android:id = "@+id/btn_cancel" />
+  </LinearLayout>
+</RelativeLayout>

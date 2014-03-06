@@ -5,24 +5,20 @@ import android.content.Context;
 import android.content.Intent;
 import android.telephony.TelephonyManager;
 
-import com.DizWARE.ShuffleTone.Managers.CallManager;
+import com.DizWARE.ShuffleTone.Others.CallManager;
+import com.DizWARE.ShuffleTone.Others.Constants;
+import com.DizWARE.ShuffleTone.Services.ShuffleService;
 
 /***
- * Receives all phone states(incoming, off-hook, idle)
+ * Handles shuffling when user receives a phone call. Checks to make sure that the phone
+ * is hanging up...if it did then shuffle the ringtone
  * 
- * Uses the call manager to do all the internal work.
- * @author diz
+ * @author Tyler Robinson
  */
-public class CallReceiver extends BroadcastReceiver 
-{
-	/***
-	 * Receives a phone call and checks for the state
-	 */
-	@Override
-	public void onReceive(Context context, Intent arg1) 
-	{	
-		CallManager cm = new CallManager(context,"");
-		TelephonyManager tele = (TelephonyManager)context.getSystemService(Context.TELEPHONY_SERVICE);
-		cm.stateChange(tele.getCallState());
+public class CallReceiver extends BroadcastReceiver {
+	@Override public void onReceive(Context context, Intent intent) {
+		if(CallManager.checkState(intent.getStringExtra(TelephonyManager.EXTRA_STATE)))
+			ShuffleService.startService(context,true, Constants.TYPE_CALLS);
 	}
+
 }

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" >
+
+  <TextView android:id="@+id/tv_title" 
+      android:text="TextTone Shuffle Test" 
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:textSize="25sp"/>
+    <TextView android:id="@+id/tv_currentLable" 
+      android:text="Old notification ringtone: " 
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:textSize="20sp"
+      android:layout_below="@id/tv_title"/>
+    <TextView android:id="@+id/tv_current" 
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"   
+	  android:layout_below="@id/tv_currentLable"/>
+    <Button android:id="@+id/btn_shuffle"
+      android:text="Run shuffle test" 
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"           
+	  android:layout_below="@id/tv_current"/>
+    <TextView android:id="@+id/tv_newLable" 
+      android:text="New notification ringtone: " 
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:textSize="20sp"
+      android:layout_below="@id/btn_shuffle"/>    
+    <TextView android:id="@+id/tv_new" 
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_below="@id/tv_newLable"/>
+  	<ToggleButton 
+	  	android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:background = "@drawable/selectbox_unchecked"
+		android:textOn=""
+		android:textOff=""		
+		android:id = "@+id/tb_notification" 
+		android:layout_below="@id/tv_new"/>
+
+    <TextView
+        android:id="@+id/tv_notification"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/tb_notification"
+        android:layout_alignBottom="@+id/tb_notification"
+        android:layout_toRightOf="@+id/tb_notification"
+        android:text="Force your TextTone to play" />
+
+</RelativeLayout>

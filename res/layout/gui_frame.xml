@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/background">
+    <FrameLayout 
+    	android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"
+    	android:id = "@+id/fl_titlebar"/>	
+    <FrameLayout
+    	android:layout_width="fill_parent"
+    	android:layout_height = "wrap_content"
+    	android:layout_below = "@id/fl_titlebar"
+    	android:layout_marginBottom = "50dip"
+    	android:id = "@+id/fl_content"/> 
+	 <SlidingDrawer
+		android:id = "@+id/sd_options"
+		android:orientation = "vertical"
+		android:layout_width = "fill_parent"
+		android:layout_height = "wrap_content"
+		android:isScrollContainer = "true"
+		android:handle = "@+id/ib_handle"
+		android:content = "@+id/fl_layout"
+		android:layout_alignParentBottom = "true" >
+		<ImageButton 
+		 	android:id = "@id/ib_handle"
+		 	android:layout_width = "300dip"
+		 	android:layout_height = "50dip" />
+    	<FrameLayout
+    		android:id = "@id/fl_layout"
+    		android:layout_width="fill_parent" 
+    		android:layout_height="wrap_content"
+    		android:background = "@android:color/black"/>   		
+ 	</SlidingDrawer>  	
+</RelativeLayout>

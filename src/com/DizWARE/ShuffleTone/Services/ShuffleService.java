@@ -2,259 +2,290 @@ package com.DizWARE.ShuffleTone.Services;
 
 import android.app.Notification;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.AudioManager;
 import android.media.RingtoneManager;
-import android.net.Uri;
-import android.os.Handler;
 import android.os.IBinder;
-import android.provider.MediaStore;
+import android.provider.Settings;
+import android.util.Log;
 
-import com.DizWARE.ShuffleTone.PreferenceWriter;
-import com.DizWARE.ShuffleTone.ShuffleMain;
-import com.DizWARE.ShuffleTone.Shuffler;
-import com.DizWARE.ShuffleTone.Managers.CallManager;
+import com.DizWARE.ShuffleTone.Others.Constants;
+import com.DizWARE.ShuffleTone.Others.PlaylistIO;
+import com.DizWARE.ShuffleTone.Others.PreferenceWriter;
+import com.DizWARE.ShuffleTone.Others.Ringtone;
+import com.DizWARE.ShuffleTone.Others.RingtonePlaylist;
+import com.DizWARE.ShuffleTone.Others.SettingTags;
+
+
 
 /***
- * Service that does all the cool shuffling stuff.
+ * This service's task is to set the ringtone based on the current Shuffled ringtone
  * 
- * When called, this will run in the background of whatever is currently
- * running and quickly pick the next item in the list. Once the end of the
- * list has been reached, the list is shuffled and index is set to 0 
- * 
- * This shuffle is attempted to happen after the current tone is played
- * but it is not a guarantee, due to the systems inability to catch 
- * notifications and the lack of tracking abilities that outside apps have
- * with other apps
- * 
- * @author Tydiz
- *
+ * @author Tyler Robinson
  */
 public class ShuffleService extends Service implements Runnable
 {
-	String writeCode;
-	String[] list;
-	int index;	
-	
+	String directory;
 	SharedPreferences settings;
-	Handler mHandler;
+	int ringerType;	
+	int notification;
+	Intent intent;
+	RingtonePlaylist playlist;
+	Thread shuffleThread;
 	
-	static int totalRuns = 0;
-	static int runs = 0;
+	private static final int NOTE_ID = 5436;
+	private static final int FAILED = -1;
+	private static final int SUCCESS = 1;
+	private static final int NONE = 0;
+	private static final int DEBUG = 2;
 	
-	boolean running = false;
-
 	
 	/***
-	 * Called when service is started; Sets up the shuffle service
+	 * For all devices 2.0 and above. Starts the service;
+	 * 
+	 * This will gather all the required data to run and then launch a new thread to run the work
 	 */
-	@Override
-	public void onStart(Intent intent, int startId) 
-	{	
-		//This was added to sync the timing of this app with the messaging app
-			//Before this, if 5 text messages came in, the shuffling would finish 
-			//for all 5 before the first text message would come in
-		try {
-			Thread.sleep(5000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+	@Override public int onStartCommand(Intent intent, int flags, int startId) 
+	{		
+		this.intent = intent;
 		
-		writeCode = intent.getStringExtra("writeCode");
+		Log.d("ShuffleTone","Starting Shuffle Service");
+		
+		Thread thread = new Thread(this);
+		thread.start();		
+		
+		return Service.START_NOT_STICKY;
+	}
+	
+	@Override
+	public void onDestroy() {
+		Log.d("ShuffleTone","Destroying Shuffle Service");
+		
+		super.onDestroy();
+	}
+	
+	/***
+	 * Runs the work of the shuffle service. This is called by a separate thread; Do not call directly
+	 */
+	@Override public void run() 
+	{
+		Log.d("ShuffleTone","Thread Started");
+		
+		boolean checkSettings = intent.getBooleanExtra(SettingTags.checkSettings.toString(), true);
+		boolean hasFilename = intent.getBooleanExtra("hasFilename", false);
+		
+		ringerType = intent.getIntExtra(SettingTags.ringerType.toString(), Constants.TYPE_CALLS);		
 		settings = this.getSharedPreferences("settings", 0);
 		
-		CallManager cm = new CallManager(this,"sms");
+		String powerSettings;
+		this.notification = settings.getInt("notification", 0);
 		
-		if(mHandler != null)
-			mHandler.removeCallbacks(this);
-		
-		mHandler = new Handler();
-		
-		totalRuns++;		
-		
-		//Stops the service if it is supposed to be off
-		if(!settings.getBoolean(writeCode + "power", false))
+		//Grabs all the type specific data needed to stay independent
+		if(hasFilename)
 		{
-			this.stopSelf();
-			return;
+			directory = intent.getStringExtra("filename");
+			if(directory.equalsIgnoreCase(Constants.DEFAULT_CALLS))
+			{
+				ringerType = Constants.TYPE_CALLS;
+				powerSettings = Constants.SETTINGS_CALLS_PWR;
+			}
+			else if(directory.equalsIgnoreCase(Constants.DEFAULT_TEXTS))
+			{
+				ringerType = Constants.TYPE_TEXTS;
+				powerSettings = Constants.SETTINGS_TXT_PWR;
+			}
+			else
+				powerSettings = "None";
+		}
+		else if(ringerType == Constants.TYPE_CALLS)
+		{ 
+			directory = Constants.DEFAULT_CALLS; 
+			powerSettings = Constants.SETTINGS_CALLS_PWR;
+		}
+		else 
+		{
+			directory = Constants.DEFAULT_TEXTS;
+			powerSettings = Constants.SETTINGS_TXT_PWR;
 		}
 		
-		//Ummm...I don't remember why this was added. TODO - Figure this out :)
-		//
-		//Ahh, figured it out. Basically sets up the message handler, but does it in a seperate
-			//thread so that it doesn't interrupt the shuffle service 
-		Thread t = new Thread(new Runnable()
-		{
-			@Override
-			public void run() 
-			{
-				if(stopRingtone())
-				{
-	
-				}				
-			}					
-		});
-		//Heck yeah I set this to max priority! :) Actually, I had to...it kept getting killed by the system
-		t.setPriority(Thread.MAX_PRIORITY);
-		t.start();
+		Log.d("ShuffleTone","Ringer Type: " + ringerType + " Power Settings: " + powerSettings + " Directory: " + directory);
+		Log.d("ShuffleTone","Check Settings: " + checkSettings);
 		
-		//If the shuffle count hasn't been reached(and we are not using a time based shuffle
-		if(!settings.getBoolean(writeCode + "useHours", false)&&
-				!cm.countDown())
+		//Checks to see if we should be running this service right now. This includes evaluating the 
+			//power settings and the run count
+		if(!settings.getBoolean(powerSettings, false)||
+		  (checkSettings && !settings.getBoolean(ringerType + SettingTags.useHours.toString(), false) 
+			&& !checkCount()))				
 			return;
 		
-		//Gets the list of ringtones and the position we are in the list
-		list = settings.getString(writeCode + "list", "").split("/");
-		index = settings.getInt(writeCode + "index", 0);
-		int length = list.length;
+		runShuffle();
 		
-		//If the list is empty or only has 1, then exit the service
-		if(length == 1 && list[0].equalsIgnoreCase(""))
-			return;
-		
-		//Resets the index and reshuffles the list once the index goes past list size
-		if(index >= length)
+		if(notification == 1 && this.ringerType == Constants.TYPE_TEXTS && checkSettings)
 		{
-			String unsplit = Shuffler.shuffleList(list);
-			PreferenceWriter.stringWriter(settings, writeCode + "list", unsplit);
-			list = unsplit.split("/");
-			index = 0;
-		}		
-		
-		setRingtone();	
+			postNotification(this);
+			MessageWatch.startService(this);
+			
+		}
+		Intent done = new Intent("com.DizWARE.ShuffleTone.Done");
+		this.sendBroadcast(done);
 		
 	}
 	
 	/***
-	 * Sets the new ringtone
+	 * Checks to see if the current count is greater than or equal to the max count. If it is than we know we can
+	 * shuffle with these settings. This also updates the current count in the preferences
+	 * 
+	 * @return - True if current >= max, false otherwise.
 	 */
-	public void setRingtone()
+	private boolean checkCount()
 	{
+		int current = settings.getInt(ringerType + SettingTags.currentCount.toString(), 1);
+		int max = settings.getInt(ringerType + SettingTags.maxCount.toString(), 1);		
 		
-		String[] currentTone = list[index].split(":");
-		Uri location; 
-		
-		//Since the MediaStore is consisting of 3 different locations
-			//(Internal, External, and DRM), this gets the correct location 
-			//and tags the ringtone index at the end.
-		if(currentTone.length > 1)
-			location = Uri.parse(getUri(currentTone[0])
-				+ "/" + currentTone[1]);
-		else
-			location = Uri.parse(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
-					+ "/" + list[index]);
-		
-		//If this is an SMS Shuffle, set the Notification ringtone, otherwise
-			//set the default ringtone
-		if(writeCode.equalsIgnoreCase("sms"))
-			RingtoneManager.setActualDefaultRingtoneUri(this, 
-					RingtoneManager.TYPE_NOTIFICATION, location);
-		else
-			RingtoneManager.setActualDefaultRingtoneUri(this, 
-					RingtoneManager.TYPE_RINGTONE, location);
-		
-		//Saves where we are in the list of ringtones
-		PreferenceWriter.intWriter(settings,writeCode + "index", index+1);		
-	}
-	
-	/***
-	 * Gets the URI for the current location(d for drm, i for internal content, e for external content)
-	 * @param location - Location of the ringtone that is playing
-	 */
-	public Uri getUri(String location)
-	{
-		Uri uri;
-		
-		if(location.equalsIgnoreCase("d"))
-			uri = Uri.parse("content://drm/audio");
-		else if(location.equalsIgnoreCase("i"))
-			uri = MediaStore.Audio.Media.INTERNAL_CONTENT_URI;
-		else 
-			uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
-		
-		return uri;
-	}
-	
-	/***
-	 * Stops the ringtone with a nasty little hack. Simply it posts a notification that says it has sound but doens't. It
-	 * is then instantly canceled causing the sound to stop
-	 */
-	private boolean stopRingtone()
-	{
-		//If this setting isn't on then exit
-		if(!settings.getBoolean(writeCode + "stop", false)||writeCode.equalsIgnoreCase("sms"))
-		{
+		Log.d("ShuffleTone","Checking Count: Current = " + current + " / Max = " + max);
+		if(current >= max) {
+			PreferenceWriter.intWriter(settings, ringerType + SettingTags.currentCount.toString(), 1);
+			return true;
+		} else {		
+			PreferenceWriter.intWriter(settings, ringerType + SettingTags.currentCount.toString(), current+1);
 			return false;
 		}
-		running = true;
-		
-		//This says, Post a message to the message handler after a user defined(set up in settings) time span
-		mHandler.postDelayed(this, (settings.getInt("smsdelay", 15))*1000);
-		
-		return true;
 	}
-
-	/***
-	 * Runs every time the Thread is called.
-	 * This is a "Hacky" way of interrupting the current notification
-	 * sound after a certain amount of time
-	 * 
-	 * Basically what it does is it launches a "null" notification.
-	 * One without sound or an image or data. The null sound is ignored
-	 * by the system(doesn't stop the current ringtone), but is noted as having
-	 * a sound. I immediately cancel the notification, which in turn cancels the 
-	 * last played sound(which was my null sound, but because it was null, it falls
-	 * back to the sound the preceded it. Yeah I know, complicated :/ but it works, except
-	 * its unsynced with everything and sometimes happens before the messaging notification 
-	 * is shot. I would like to fix this
-	 */
-	@Override
-	public void run() 
+	
+	private synchronized void runShuffle()
 	{
-		//In case of multiple restarts(if more than one ringtone come in at once)
-			//this will make sure the last ringtone is the one that is canceled early
-		if(totalRuns != runs+1)
+		playlist = PlaylistIO.loadPlaylist(this.getApplicationContext(), directory);
+		
+		//Load the playlist and waits registers a wait for it to finish
+		if(playlist.size() > 0)
+		{	
+			Log.d("ShuffleTone", "Load Complete: Playlist size = " + playlist.size());
+			if(notification == DEBUG) postNotification(this, SUCCESS, NONE, NONE);
+		}
+		else
 		{
-			runs++;
+			Log.e("ShuffleTone", "Load failed");
+			if(notification == DEBUG) postNotification(this, FAILED, NONE, NONE);
 			return;
 		}
 		
-		Notification note = new Notification(0,"",System.currentTimeMillis());
-		NotificationManager noteMan = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+		//Gets the next ringtone and sets it
+		Ringtone next = playlist.getCurrent();
 		
-		//Creates an intent. The flag tells it that it needs to stop all sounds when a new one comes in
-		PendingIntent i = PendingIntent.getActivity(this, 0, 
-				new Intent(this, ShuffleMain.class), Notification.FLAG_AUTO_CANCEL);		
+		if(next != null)
+		{
+			RingtoneManager.setActualDefaultRingtoneUri(this, ringerType, next.getURI());
+			Log.d("ShuffleTone", "Set Ringtone " + next.toString());//TODO - DEBUG CODE
+			if(notification == DEBUG) postNotification(this, SUCCESS, SUCCESS, NONE);
+		}
+		else
+		{
+			Log.e("ShuffleTone", "Next Ringtone is null. Load failed.");
+			if(notification == DEBUG) postNotification(this, SUCCESS, FAILED, NONE);
+			return;
+		}
 		
-		//Displays the correct information
-
-		//Makes sure that the notification doesn't actually do anything
-		note.setLatestEventInfo(this, "Notification hit","Notification hit" , i);
-		
-		//Post a fake sound
-		note.sound = Uri.parse("");
-		
-		//Notify and then cancel
-		noteMan.notify(3377, note);		
-		noteMan.cancel(3377);		
-		
-		totalRuns = 0;
-		runs = 0;
-		
-		running = false;	
+		//Save the list again
+		if(playlist.size() > 0 && PlaylistIO.savePlaylist(this, directory, playlist))
+		{
+			Log.d("ShuffleTone", "Save successful");
+			if(notification == DEBUG) postNotification(this, SUCCESS, SUCCESS, SUCCESS);
+		}
+		else
+		{
+			Log.e("ShuffleTone", "Playlist is empty or save failed. Skipping save");
+			if(notification == DEBUG) postNotification(this, SUCCESS, SUCCESS, FAILED);
+		}
 	}
 	
 	/***
-	 * SEE...NOT USED! Yuck!
+	 * Starts the service running in the background of the phone
+	 * 
+	 * @param context - Context that the service runs
+	 * @param checkSettings - True will check against settings before running shuffle, otherwise just does the shuffle
+	 * @param ringerType - Type of ringtone we are shuffling
 	 */
-	@Override
-	public IBinder onBind(Intent arg0) { return null; }
-
-
-
+	public static void startService(Context context, boolean checkSettings,int ringerType)
+	{
+		Intent service = new Intent();
+		service.setClass(context, ShuffleService.class);
+		service.putExtra(SettingTags.checkSettings.toString(), checkSettings);
+		service.putExtra(SettingTags.ringerType.toString(), ringerType);
+		context.startService(service);
+	}
 	
-
+	/***
+	 * Starts the service running in the background of the phone
+	 * 
+	 * @param context - Context that the service runs
+	 * @param checkSettings - True will check against settings before running shuffle, otherwise just does the shuffle
+	 * @param filename - The playlist file
+	 */
+	public static void startService(Context context, boolean checkSettings, String filename)
+	{
+		Intent service = new Intent();
+		service.setClass(context, ShuffleService.class);
+		service.putExtra(SettingTags.checkSettings.toString(), checkSettings);
+		service.putExtra("hasFilename", true);
+		service.putExtra("filename", filename);
+		context.startService(service);
+	}
+	
+	/***
+	 * Posts a notification for receiving a text message as a fallback when user opts into it
+	 * @param context
+	 */
+	public static void postNotification(Context context)
+	{
+		Notification notification = new Notification();
+		notification.sound = Settings.System.DEFAULT_NOTIFICATION_URI;		
+		
+		sendNotification(context, notification);
+	}
+	
+	/***
+	 * Post a debugging notification with indicators of ShuffleTone working
+	 * @param context - The service context to post the notification
+	 * @param loaded - Has the playlist loaded; 0 - no, 1 yes, -1 failed
+	 * @param shuffled - Has the playlist updated to the new pointer; 0 - no, 1 yes, -1 failed
+	 * @param saved - Has the playlist saved; 0 - no, 1 yes, -1 failed
+	 */
+	public static void postNotification(Context context, int loaded, int shuffled, int saved)
+	{
+		Notification notification = new Notification();
+		notification.sound = Settings.System.DEFAULT_NOTIFICATION_URI;	
+		
+		//Get remote view
+		//Set values of the check marks
+		//Displays the current ringtone name
+		
+		sendNotification(context, notification);
+	}
+	
+	/***
+	 * Sends a notification to the status bar. This will update a notification if it is already posted
+	 * @param context - Context launching this notification
+	 * @param notification - The notification to launch or update
+	 */
+	private static void sendNotification(Context context, Notification notification)
+	{		
+		NotificationManager manager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
+		manager.notify(NOTE_ID, notification);
+	}
+	
+	/***
+	 * Cancels a posted notification. Does nothing if there isn't one posted
+	 * @param context - Context canceling this notification
+	 */
+	public static void cancelNotification(Context context)
+	{
+		NotificationManager manager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
+		manager.cancel(NOTE_ID);
+	}
+	
+	/***UNUSED REQUIRED METHOD***/
+	@Override public IBinder onBind(Intent arg0) { return null; }
 }

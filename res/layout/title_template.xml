@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent">
+<TextView 
+	android:layout_width="wrap_content" 
+	android:layout_height="wrap_content" 
+	android:minWidth="50dip"
+	android:minHeight="25dip"
+	android:layout_alignParentTop="true" 
+	android:layout_marginTop="5dip" 
+	android:layout_marginLeft="5dip" 
+	android:id="@+id/tv_leftCorner" 
+	android:text="LeftCorner"
+	android:textColor="@color/White"/>
+<TextView 
+	android:layout_width="wrap_content" 
+	android:layout_height="wrap_content" 
+	android:minWidth="50dip"
+	android:minHeight="25dip"
+	android:layout_alignParentRight="true" 
+	android:text="RightCorner" 
+	android:gravity="right"
+	android:id="@+id/tv_rightCorner" 	
+	android:textColor="@color/White"
+	android:layout_marginRight="5dip" 
+	android:layout_marginTop="5dip"></TextView>
+<TextView 
+	android:layout_toRightOf="@+id/tv_leftCorner" 
+	android:layout_toLeftOf ="@id/tv_rightCorner"
+	android:layout_height="wrap_content" 
+	android:layout_alignTop="@+id/tv_leftCorner" 
+	android:id="@+id/tv_Title" 
+	android:gravity = "center_horizontal"
+	android:layout_centerHorizontal="true"
+	android:layout_width="fill_parent" 
+	android:textSize="24dip" 
+	android:text="" 
+	android:textColor="@color/White"/>
+</RelativeLayout>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent">
+  <RadioGroup
+  	android:layout_width="fill_parent"
+  	android:layout_height = "wrap_content"
+  	android:orientation ="horizontal"
+  	android:gravity = "center_horizontal"
+  	android:id = "@+id/rg_type">
+  	<RadioButton
+  		android:layout_width="wrap_content"
+  		android:layout_height = "wrap_content"
+  		android:layout_marginRight = "20dip"
+  		android:checked = "true"
+  		android:text = "Calls"
+  		android:id = "@+id/rb_input"/>
+  	<RadioButton
+  		android:layout_width="wrap_content"
+  		android:layout_height = "wrap_content"
+  		android:layout_marginLeft = "20dip"
+  		android:layout_gravity = "right"
+  		android:text = "Hours"
+  		android:id = "@+id/rb_hours"/>
+  </RadioGroup>
+   <EditText 
+  		android:layout_width="40dip"
+  		android:layout_height = "wrap_content"
+  		android:layout_below = "@id/rg_type"
+  		android:layout_margin = "10dip"
+  		android:inputType = "number"
+  		android:duplicateParentState = "false"
+  		android:id = "@+id/et_count"/>
+  <SeekBar	
+  		android:layout_width="fill_parent"
+  		android:layout_height = "wrap_content"
+  		android:layout_marginRight = "10dip"
+  		android:layout_toRightOf = "@id/et_count"
+  		android:layout_below = "@id/rg_type"
+  		android:id = "@+id/sb_count"/>
+  <Button
+  		android:layout_width = "150dip"
+  		android:layout_height = "wrap_content"
+  		android:layout_below = "@id/sb_count"
+  		android:layout_centerHorizontal = "true"
+  		android:text = "Ok"
+  		android:id = "@+id/btn_ok"/>
+</RelativeLayout>

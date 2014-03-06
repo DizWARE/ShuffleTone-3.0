@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent">
+  <ImageButton 
+  	android:id = "@+id/ib_remove"
+  	android:layout_width = "20dip"
+  	android:layout_height = "20dip"
+  	android:layout_alignParentLeft = "true"
+  	android:layout_centerVertical = "true"
+	android:layout_margin = "5dip"
+	android:background="@drawable/remove"
+  	/>
+  	
+  <TextView
+  	android:id = "@+id/tv_duration"
+  	android:layout_width = "wrap_content"
+  	android:layout_height = "wrap_content"
+  	android:layout_margin = "5dip"
+  	android:layout_alignParentRight = "true"
+  	/>
+  <TextView 
+  	android:id ="@+id/tv_title"
+  	style = "@style/Heading1"
+  	android:layout_toRightOf = "@id/ib_remove"
+  	android:layout_toLeftOf = "@id/tv_duration"
+  	android:layout_margin = "5dip"
+  	/>
+  <TextView
+  	android:id = "@+id/tv_artist"
+  	style = "@style/Heading3"
+  	android:layout_alignLeft ="@id/tv_title"
+  	android:layout_below = "@id/tv_title"
+  	/>
+  <TextView
+  	android:id = "@+id/tv_location"
+  	android:layout_width = "wrap_content"
+  	android:layout_height = "wrap_content"
+  	android:layout_below = "@id/tv_artist"
+  	android:layout_alignLeft = "@id/tv_artist"  	
+  	android:textSize = "12dip"
+  	/>
+</RelativeLayout>

@@ -6,13 +6,11 @@
     <FrameLayout 
     	android:layout_width="wrap_content"
     	android:layout_height="wrap_content"
-    	android:id = "@+id/fl_selectAll" />
+    	android:id = "@+id/fl_backup" />
     <ListView
     	android:layout_width="fill_parent"
     	android:layout_height="fill_parent"
-    	android:layout_below = "@id/fl_selectAll"
-    	android:choiceMode ="multipleChoice"
-    	android:fastScrollEnabled="true"
+    	android:layout_below = "@id/fl_backup"
     	android:cacheColorHint="#00000000"
-    	android:id = "@+id/lv_browser"/>    
+    	android:id = "@+id/lv_restore"/>    
 </RelativeLayout>

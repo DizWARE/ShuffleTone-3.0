@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     
-    <string name="app_name">ShuffleTone 2.0</string>
-<string name="accept">&quot; Are you sure want to\naccept these changes?</string>
-<string name="version">2.0.2</string>
-<string name="nag">Dig my stuff? Show your appreciation by Donating. Press MENU and click DONATE.\nPress MENU to remove this NAG.</string>
+    <string name="app_name">ShuffleTone 3.0</string>
+<string name="version">3.0</string>
+<string name="default_calls">.calls_default</string><string name="default_texts">.texts_default</string>
+<string name="instructions">1) Open the application, ShuffleTone\n\n2) Click turn on ShuffleTone; A dialog will appear with 2 options\n\n3) Select either or both options to apply ringtone shuffling to them\n\n4) Click &quot;Pick out tones&quot;\n\n5) Scroll through the list of ringtones, selecting the ones you like. Remember, if you have a lot of ringtones, there is a ton of useful features in the Sort Options tray.\n\n6) Click Back &amp; Save in the top left corner\n\n7) Verify that you want to save it to the list you originally selected or uncheck both to discard any changes\n\n\nFor Texts:\n\n8) Open up your text messaging app(Messenger, Handcent, Go SMS, etc) and press MENU\n\n9) Click Prefrences\n\n10) Go to the area where it says Notification Settings. Click Change Ringtone\n\n11) Select Default and press OK\n\n12) You should now be done\n\n\nFor calls:\n\n8) You are done...No additional work needs to be done\n\n</string>
+<string name="help">If your text messaging ringtone is not shuffling, most likely it is because you have not changed the ringtone in the app you use for Text Messaging to the default ringtone.\n\n1) Open up the application that you use for text messaging(Example: GoSMS or Handcent, etc)\n\n2) Press MENU-&gt;Settings(or Prefrences)\n\n3) Scroll down to where it says Notification Settings(or something similar) and click Change Ringtone\n\n4) When the Ringtone selection shows up, press Default and click OK.\n\n5) And your done! :)\n\nHopefully this helps you solve your problem...if not, please check the FAQ!! Thanks!\n\n</string>
+
 </resources>
