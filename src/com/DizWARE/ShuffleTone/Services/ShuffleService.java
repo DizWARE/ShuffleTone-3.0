@@ -6,7 +6,6 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.media.AudioManager;
 import android.media.RingtoneManager;
 import android.os.IBinder;
 import android.provider.Settings;
@@ -32,6 +31,7 @@ public class ShuffleService extends Service implements Runnable
 	SharedPreferences settings;
 	int ringerType;	
 	int notification;
+	long duration;
 	Intent intent;
 	RingtonePlaylist playlist;
 	Thread shuffleThread;
@@ -126,9 +126,9 @@ public class ShuffleService extends Service implements Runnable
 		if(notification == 1 && this.ringerType == Constants.TYPE_TEXTS && checkSettings)
 		{
 			postNotification(this);
-			MessageWatch.startService(this);
-			
+			MessageWatch.startService(this, duration);
 		}
+		
 		Intent done = new Intent("com.DizWARE.ShuffleTone.Done");
 		this.sendBroadcast(done);
 		
@@ -178,6 +178,8 @@ public class ShuffleService extends Service implements Runnable
 		if(next != null)
 		{
 			RingtoneManager.setActualDefaultRingtoneUri(this, ringerType, next.getURI());
+			duration = next.getDuration();
+			
 			Log.d("ShuffleTone", "Set Ringtone " + next.toString());//TODO - DEBUG CODE
 			if(notification == DEBUG) postNotification(this, SUCCESS, SUCCESS, NONE);
 		}
@@ -240,9 +242,8 @@ public class ShuffleService extends Service implements Runnable
 	 */
 	public static void postNotification(Context context)
 	{
-		Notification notification = new Notification();
-		notification.sound = Settings.System.DEFAULT_NOTIFICATION_URI;		
-		
+		Notification notification = new Notification();	
+		notification.sound = Settings.System.DEFAULT_NOTIFICATION_URI;
 		sendNotification(context, notification);
 	}
 	
@@ -256,7 +257,6 @@ public class ShuffleService extends Service implements Runnable
 	public static void postNotification(Context context, int loaded, int shuffled, int saved)
 	{
 		Notification notification = new Notification();
-		notification.sound = Settings.System.DEFAULT_NOTIFICATION_URI;	
 		
 		//Get remote view
 		//Set values of the check marks
@@ -273,6 +273,7 @@ public class ShuffleService extends Service implements Runnable
 	private static void sendNotification(Context context, Notification notification)
 	{		
 		NotificationManager manager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
+		notification.vibrate = new long[]{0};
 		manager.notify(NOTE_ID, notification);
 	}
 	
