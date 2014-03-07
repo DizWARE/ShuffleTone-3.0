@@ -60,8 +60,10 @@ public class ShuffleService extends Service implements Runnable
 		return Service.START_NOT_STICKY;
 	}
 	
-	@Override
-	public void onDestroy() {
+	/***
+	 * Handle the destruction of the service
+	 */
+	@Override public void onDestroy() {
 		Log.d("ShuffleTone","Destroying Shuffle Service");
 		
 		super.onDestroy();
@@ -152,6 +154,9 @@ public class ShuffleService extends Service implements Runnable
 		}
 	}
 	
+	/***
+	 * Open the saved playlist; selects and sets the current ringtone and save the playlist
+	 */
 	private synchronized void runShuffle()
 	{
 		playlist = PlaylistIO.loadPlaylist(this.getApplicationContext(), directory);

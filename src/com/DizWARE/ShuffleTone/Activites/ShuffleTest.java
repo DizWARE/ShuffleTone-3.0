@@ -24,6 +24,11 @@ import com.DizWARE.ShuffleTone.Others.Constants;
 import com.DizWARE.ShuffleTone.Others.PreferenceWriter;
 import com.DizWARE.ShuffleTone.Services.ShuffleService;
 
+/***
+ * A UI class with options to test the applications ability to handle TextTones
+ * 
+ * @author Tyler Robinson
+ */
 public class ShuffleTest extends Activity implements Runnable
 {
 	TextView tv_current;
@@ -96,8 +101,7 @@ public class ShuffleTest extends Activity implements Runnable
 		 */
 		tb_notification.setOnCheckedChangeListener(new OnCheckedChangeListener() 
 		{			
-			@Override
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) 
+			@Override public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) 
 			{
 				if(isChecked)
 				{

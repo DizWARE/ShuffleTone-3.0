@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
       package="com.DizWARE.ShuffleTone"
-      android:versionName="3.0.3" android:versionCode="13" android:installLocation="auto">
+      android:versionName="3.0.5" android:versionCode="20" android:installLocation="auto">
 
     <uses-sdk
         android:minSdkVersion="8"
