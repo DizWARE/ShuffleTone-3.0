@@ -124,10 +124,7 @@ public class ShuffleService extends Service implements Runnable
 		runShuffle();
 		
 		if(notification == 1 && this.ringerType == Constants.TYPE_TEXTS && checkSettings)
-		{
-			postNotification(this);
 			MessageWatch.startService(this, duration);
-		}
 		
 		Intent done = new Intent("com.DizWARE.ShuffleTone.Done");
 		this.sendBroadcast(done);
