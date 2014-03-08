@@ -1,54 +1,238 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content" >
-
-  <TextView android:id="@+id/tv_title" 
-      android:text="TextTone Shuffle Test" 
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:textSize="25sp"/>
-    <TextView android:id="@+id/tv_currentLable" 
-      android:text="Old notification ringtone: " 
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:textSize="20sp"
-      android:layout_below="@id/tv_title"/>
-    <TextView android:id="@+id/tv_current" 
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"   
-	  android:layout_below="@id/tv_currentLable"/>
-    <Button android:id="@+id/btn_shuffle"
-      android:text="Run shuffle test" 
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"           
-	  android:layout_below="@id/tv_current"/>
-    <TextView android:id="@+id/tv_newLable" 
-      android:text="New notification ringtone: " 
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:textSize="20sp"
-      android:layout_below="@id/btn_shuffle"/>    
-    <TextView android:id="@+id/tv_new" 
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_below="@id/tv_newLable"/>
-  	<ToggleButton 
-	  	android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:background = "@drawable/selectbox_unchecked"
-		android:textOn=""
-		android:textOff=""		
-		android:id = "@+id/tb_notification" 
-		android:layout_below="@id/tv_new"/>
+    android:layout_height="wrap_content"
+    android:scrollbars="vertical" 
+    android:paddingTop="15dp">
 
     <TextView
-        android:id="@+id/tv_notification"
-        android:layout_width="wrap_content"
+        android:id="@+id/tv_title"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/tb_notification"
-        android:layout_alignBottom="@+id/tb_notification"
-        android:layout_toRightOf="@+id/tb_notification"
-        android:text="Force your TextTone to play" />
+        android:gravity="center_horizontal"
+        android:text="@string/title"
+        android:textColor="@color/White"
+        android:textSize="25sp"
+        android:textStyle="bold" />
+
+    <ScrollView
+        android:id="@+id/sv_shuffleTest"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:fillViewport="true" 
+        android:layout_below="@id/tv_title">
+
+        <RelativeLayout
+            android:id="@+id/rl_shuffleTest"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="25dp"
+            android:paddingTop="25dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="10dp">
+			<TextView
+		        android:id="@+id/tv_status"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_alignParentLeft="true"		        
+		        android:text="@string/status"
+		        android:textAllCaps="false"
+		        android:textAppearance="?android:attr/textAppearanceMedium"
+		        android:textColor="@color/White"
+		        android:textSize="20sp"
+		        android:textStyle="bold" />
+		
+		    <ToggleButton
+		        android:id="@+id/tb_power"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_alignLeft="@+id/tv_status"
+		        android:layout_below="@+id/tv_status"
+		        android:background="@drawable/selectbox_unchecked"
+		        android:textOff=""
+		        android:textOn="" />
+		
+		    <TextView
+		        android:id="@+id/tv_power"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_alignBottom="@+id/tb_power"
+		        android:layout_toRightOf="@+id/tb_power"
+		        android:text="@string/power"
+		        android:textAppearance="?android:attr/textAppearanceMedium"
+		        android:textColor="@color/White" />
+		
+		    <TextView
+		        android:id="@+id/tv_currentLable"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_alignParentRight="true"
+		        android:layout_alignTop="@+id/tv_power"
+		        android:layout_marginRight="5dp"
+		        android:text="@string/current"
+		        android:textAppearance="?android:attr/textAppearanceMedium"
+		        android:textColor="@color/White"
+		        android:textSize="15sp" />
+		
+		    <TextView
+		        android:id="@+id/tv_current"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_alignParentRight="true"
+		        android:layout_below="@+id/tv_power"
+		        android:text="@string/none"
+		        android:textAppearance="?android:attr/textAppearanceSmall" />
+		
+		    <TextView
+		        android:id="@+id/tv_fixes"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_alignLeft="@id/tv_status"
+		        android:layout_below="@id/tv_current"
+		        android:text="@string/fixes"
+		        android:textAllCaps="false"
+		        android:textAppearance="?android:attr/textAppearanceMedium"
+		        android:textColor="@color/White"
+		        android:textSize="20sp"
+		        android:textStyle="bold" />
+		
+		    <ToggleButton
+		        android:id="@+id/tb_notification"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_alignLeft="@id/tb_power"
+		        android:layout_below="@+id/tv_fixes"
+		        android:background="@drawable/selectbox_unchecked"
+		        android:textOff=""
+		        android:textOn="" />
+		
+		    <TextView
+		        android:id="@+id/tv_notification"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_alignBottom="@id/tb_notification"
+		        android:layout_alignLeft="@+id/tv_power"
+		        android:layout_below="@id/tv_fixes"
+		        android:text="@string/notification"
+		        android:textAppearance="?android:attr/textAppearanceMedium"
+		        android:textColor="@color/White" />
+		
+		    <TextView
+		        android:id="@+id/tv_warning"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_alignParentRight="false"
+		        android:layout_alignRight="@id/tv_notification"
+		        android:layout_below="@id/tv_notification"
+		        android:gravity="right"
+		        android:text="@string/warning"
+		        android:textAppearance="?android:attr/textAppearanceSmall"
+		        android:textColor="@color/White"
+		        android:textSize="10sp"
+		        android:textStyle="bold" />
+		
+		    <TextView
+		        android:id="@+id/tv_debug"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_alignLeft="@id/tv_status"
+		        android:layout_below="@id/tv_warning"
+		        android:layout_marginTop="14dp"
+		        android:text="@string/debug"
+		        android:textAllCaps="false"
+		        android:textAppearance="?android:attr/textAppearanceMedium"
+		        android:textColor="@color/White"
+		        android:textSize="20sp"
+		        android:textStyle="bold" />
+		
+		    <Button
+		        android:id="@+id/btn_shuffle"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_alignLeft="@id/tb_notification"
+		        android:layout_below="@+id/tv_debug"
+		        android:layout_marginTop="5dp"
+		        android:text="@string/shuffle_btn" />
+		
+		    <TextView
+		        android:id="@+id/tv_newLabel"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_alignParentRight="true"
+		        android:layout_alignRight="@+id/tv_oldLabel"
+		        android:layout_below="@+id/tv_old"
+		        android:text="@string/new_ring"
+		        android:textAppearance="?android:attr/textAppearanceMedium"
+		        android:textColor="@color/White"
+		        android:textSize="15sp" />
+		
+		    <TextView
+		        android:id="@+id/tv_new"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_alignLeft="@+id/btn_message"
+		        android:layout_alignParentRight="true"
+		        android:layout_alignRight="@id/tv_newLabel"
+		        android:layout_below="@+id/tv_newLabel"
+		        android:gravity="right"
+		        android:text="@string/none"
+		        android:textAppearance="?android:attr/textAppearanceSmall" />
+		
+		    <TextView
+		        android:id="@+id/tv_oldLabel"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_alignParentRight="true"
+		        android:layout_alignRight="@+id/tv_notification"
+		        android:layout_alignTop="@+id/btn_shuffle"
+		        android:text="@string/old"
+		        android:textAppearance="?android:attr/textAppearanceMedium"
+		        android:textColor="@color/White"
+		        android:textSize="15sp" />
+		    
+		    <TextView
+		        android:id="@+id/tv_old"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_alignParentRight="true"
+		        android:layout_alignRight="@+id/tv_oldLabel"
+		        android:layout_below="@+id/tv_oldLabel"
+		        android:layout_toRightOf="@id/btn_shuffle"
+		        android:gravity="right"
+		        android:text="@string/none"
+		        android:textAppearance="?android:attr/textAppearanceSmall" />		
+
+			<Button
+		        android:id="@+id/btn_message"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_alignLeft="@id/btn_shuffle"
+		        android:layout_below="@+id/tv_new"
+		        android:text="@string/message_btn" />
+			
+		    <ToggleButton
+		        android:id="@+id/tb_debugNote"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_alignLeft="@id/tb_notification"
+		        android:layout_below="@+id/btn_message"
+		        android:background="@drawable/selectbox_unchecked"
+		        android:textOff=""
+		        android:textOn="" />
+		
+		    <TextView
+		        android:id="@+id/tv_debugNote"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_alignLeft="@+id/tv_notification"
+		        android:layout_alignTop="@+id/tb_debugNote"
+		        android:text="@string/debug_note"
+		        android:textAppearance="?android:attr/textAppearanceMedium"
+		        android:textColor="@color/White" />
+		
+		    
+        </RelativeLayout>
+
+    </ScrollView>
 
 </RelativeLayout>

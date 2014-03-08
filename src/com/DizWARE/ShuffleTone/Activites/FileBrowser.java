@@ -1227,7 +1227,6 @@ public class FileBrowser extends Activity
 			
 			mTitle.setText(currentlyPlaying.getArtist() + "\n" 
 					+ currentlyPlaying.getTitle());
-			
 			mMedia.setBackgroundDrawable(stopButton);
 			if(currentlyPlaying.getLocation() != Constants.LOC_DRM)
 			{

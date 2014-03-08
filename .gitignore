@@ -3,5 +3,7 @@ gen/*
 .settings/*
 build.properties
 local.properties
+default.properties
+multiInst
 .classpath
 .project

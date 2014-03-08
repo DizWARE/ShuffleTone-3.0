@@ -39,8 +39,11 @@ public class ShuffleService extends Service implements Runnable
 	private static final int NOTE_ID = 5436;
 	private static final int FAILED = -1;
 	private static final int SUCCESS = 1;
+	
+	private static final int NOTE_ON = 1;
 	private static final int NONE = 0;
 	private static final int DEBUG = 2;
+	private static final int DEBUG_SOUND = 3;
 	
 	
 	/***
@@ -125,7 +128,7 @@ public class ShuffleService extends Service implements Runnable
 		
 		runShuffle();
 		
-		if(notification == 1 && this.ringerType == Constants.TYPE_TEXTS && checkSettings)
+		if(notification == NOTE_ON && this.ringerType == Constants.TYPE_TEXTS && checkSettings)
 			MessageWatch.startService(this, duration);
 		
 		Intent done = new Intent("com.DizWARE.ShuffleTone.Done");
@@ -160,17 +163,18 @@ public class ShuffleService extends Service implements Runnable
 	private synchronized void runShuffle()
 	{
 		playlist = PlaylistIO.loadPlaylist(this.getApplicationContext(), directory);
+		boolean note_sound = notification==DEBUG_SOUND;
 		
 		//Load the playlist and waits registers a wait for it to finish
 		if(playlist.size() > 0)
 		{	
 			Log.d("ShuffleTone", "Load Complete: Playlist size = " + playlist.size());
-			if(notification == DEBUG) postNotification(this, SUCCESS, NONE, NONE);
+			if(notification == DEBUG) postNotification(this, note_sound, SUCCESS, NONE, NONE);
 		}
 		else
 		{
 			Log.e("ShuffleTone", "Load failed");
-			if(notification == DEBUG) postNotification(this, FAILED, NONE, NONE);
+			if(notification == DEBUG) postNotification(this, note_sound, FAILED, NONE, NONE);
 			return;
 		}
 		
@@ -183,12 +187,12 @@ public class ShuffleService extends Service implements Runnable
 			duration = next.getDuration();
 			
 			Log.d("ShuffleTone", "Set Ringtone " + next.toString());//TODO - DEBUG CODE
-			if(notification == DEBUG) postNotification(this, SUCCESS, SUCCESS, NONE);
+			if(notification == DEBUG) postNotification(this, note_sound, SUCCESS, SUCCESS, NONE);
 		}
 		else
 		{
 			Log.e("ShuffleTone", "Next Ringtone is null. Load failed.");
-			if(notification == DEBUG) postNotification(this, SUCCESS, FAILED, NONE);
+			if(notification == DEBUG) postNotification(this, note_sound, SUCCESS, FAILED, NONE);
 			return;
 		}
 		
@@ -196,12 +200,12 @@ public class ShuffleService extends Service implements Runnable
 		if(playlist.size() > 0 && PlaylistIO.savePlaylist(this, directory, playlist))
 		{
 			Log.d("ShuffleTone", "Save successful");
-			if(notification == DEBUG) postNotification(this, SUCCESS, SUCCESS, SUCCESS);
+			if(notification == DEBUG) postNotification(this, note_sound, SUCCESS, SUCCESS, SUCCESS);
 		}
 		else
 		{
 			Log.e("ShuffleTone", "Playlist is empty or save failed. Skipping save");
-			if(notification == DEBUG) postNotification(this, SUCCESS, SUCCESS, FAILED);
+			if(notification == DEBUG) postNotification(this, note_sound, SUCCESS, SUCCESS, FAILED);
 		}
 	}
 	
@@ -256,10 +260,11 @@ public class ShuffleService extends Service implements Runnable
 	 * @param shuffled - Has the playlist updated to the new pointer; 0 - no, 1 yes, -1 failed
 	 * @param saved - Has the playlist saved; 0 - no, 1 yes, -1 failed
 	 */
-	public static void postNotification(Context context, int loaded, int shuffled, int saved)
+	public static void postNotification(Context context, boolean sound, int loaded, int shuffled, int saved)
 	{
 		Notification notification = new Notification();
 		
+		if(sound) notification.sound = Settings.System.DEFAULT_NOTIFICATION_URI;
 		//Get remote view
 		//Set values of the check marks
 		//Displays the current ringtone name

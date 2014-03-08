@@ -32,9 +32,15 @@ import com.DizWARE.ShuffleTone.Services.ShuffleService;
 public class ShuffleTest extends Activity implements Runnable
 {
 	TextView tv_current;
+	TextView tv_old;
 	TextView tv_new;
+	
 	Button btn_shuffle;
+	Button btn_message;
+	
+	ToggleButton tb_power;
 	ToggleButton tb_notification;
+	ToggleButton tb_debugNote;
 	
 	SharedPreferences settings;
 	
@@ -49,11 +55,19 @@ public class ShuffleTest extends Activity implements Runnable
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.shuffle_test);
 		
-		//Initialize UI
+		//Initialize TextViews
 		tv_current = (TextView)this.findViewById(R.id.tv_current);
 		tv_new = (TextView)this.findViewById(R.id.tv_new);
+		tv_old = (TextView)this.findViewById(R.id.tv_old);
+		
+		//Initialize Buttons
 		btn_shuffle = (Button)this.findViewById(R.id.btn_shuffle);
+		btn_message = (Button)this.findViewById(R.id.btn_message);
+		
+		//Initialize Toggle Buttons
 		tb_notification = (ToggleButton)this.findViewById(R.id.tb_notification);
+		tb_power = (ToggleButton)this.findViewById(R.id.tb_power);
+		tb_debugNote = (ToggleButton)this.findViewById(R.id.tb_debugNote);
 		
 		//Get our application settings
 		settings = this.getSharedPreferences("settings", 0);
@@ -75,7 +89,7 @@ public class ShuffleTest extends Activity implements Runnable
 				t.run();
 				
 				while(t.isAlive());
-				
+				tv_current.setText(newTitle);
 				tv_new.setText(newTitle);
 			}
 		};		
@@ -91,34 +105,44 @@ public class ShuffleTest extends Activity implements Runnable
 				ShuffleService.startService(ShuffleTest.this, false, Constants.TYPE_TEXTS);
 				
 				//Switch the new ringtone to current, since it will be the previous ringtone when the new one is fetched
-				if(newTitle != "") tv_current.setText(newTitle);
+				if(newTitle != "") tv_old.setText(newTitle);
+				else tv_old.setText(oldTitle);
 				tv_new.setText("Retrieving...");
 			}
 		});		
 		
 		/***
-		 * Turns on or off the override feature. Demonstrates it visualy with the on/off checkboxes Nate made
+		 * Turns on or off the TextTone override feature. 
 		 */
-		tb_notification.setOnCheckedChangeListener(new OnCheckedChangeListener() 
-		{			
-			@Override public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) 
+		tb_notification.setOnCheckedChangeListener(new OnCheckBoxChangedListener()
+		{
+			@Override public void onCheckedChanged(CompoundButton buttonView,
+					boolean isChecked)
 			{
-				if(isChecked)
-				{
-					buttonView.setBackgroundResource(R.drawable.selectbox_checked);
-					PreferenceWriter.intWriter(settings, "notification", 1);
-				}
-				else
-				{
-					buttonView.setBackgroundResource(R.drawable.selectbox_unchecked);
-					PreferenceWriter.intWriter(settings, "notification", 0);
-				}
-				
+				if(isChecked)	PreferenceWriter.intWriter(settings, "notification", 1);
+				else			PreferenceWriter.intWriter(settings, "notification", 0);
+				super.onCheckedChanged(buttonView, isChecked);
+			}
+		});
+		
+		/***
+		 * Turns on or off the TextTone override feature. 
+		 */
+		tb_power.setOnCheckedChangeListener(new OnCheckBoxChangedListener()
+		{
+			@Override public void onCheckedChanged(CompoundButton buttonView,
+					boolean isChecked)
+			{
+				if(isChecked)	PreferenceWriter.booleanWriter(settings, Constants.SETTINGS_TXT_PWR, true);
+				else			PreferenceWriter.booleanWriter(settings, Constants.SETTINGS_TXT_PWR, false);
+				super.onCheckedChanged(buttonView, isChecked);
 			}
 		});
 		
 		//Set the box based on the setting
-		tb_notification.setChecked(settings.getInt("notification", 0) == 1);
+		tb_notification.setChecked(settings.getInt("notification", 0) == 1||settings.getInt("notification", 0) == 3);
+		tb_debugNote.setChecked(settings.getInt("notification", 0) == 2||settings.getInt("notification", 0) == 3);
+		tb_power.setChecked(settings.getBoolean(Constants.SETTINGS_TXT_PWR, false));
 	}
 
 	/***
@@ -138,5 +162,15 @@ public class ShuffleTest extends Activity implements Runnable
 		
 		ringtone = RingtoneManager.getRingtone(this, Settings.System.DEFAULT_NOTIFICATION_URI);
 		if(ringtone != null) newTitle = ringtone.getTitle(this);
+	}
+	
+	private abstract class OnCheckBoxChangedListener implements OnCheckedChangeListener
+	{
+		@Override public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+		{
+			if(isChecked) buttonView.setBackgroundResource(R.drawable.selectbox_checked);
+			else buttonView.setBackgroundResource(R.drawable.selectbox_unchecked);
+			
+		}
 	}
 }

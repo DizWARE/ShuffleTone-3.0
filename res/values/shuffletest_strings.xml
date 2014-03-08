@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title">TextTone Shuffle Test</string>
+    <string name="status">Status</string>
+    <string name="fixes">Fixes</string>
+    <string name="debug">Debug</string>
+    <string name="current">Current Ringtone</string>
+    <string name="old">Old Ringtone</string>
+    <string name="new_ring">New Ringtone</string>
+    <string name="shuffle_btn">Run Shuffle Test</string>
+    <string name="notification">Force TextTone Shuffle to play :)</string>
+    <string name="debug_note">Show debug notifications</string>
+    <string name="power">Turned On</string>
+    <string name="none">None</string>
+    <string name="warning">Warning: Turn your messaging notification ringtone to silent</string>
+    <string name="message_btn">Send Test Text Message</string>
+    
+</resources>
