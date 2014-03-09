@@ -2,6 +2,7 @@ package com.DizWARE.ShuffleTone.Services;
 
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -10,7 +11,10 @@ import android.media.RingtoneManager;
 import android.os.IBinder;
 import android.provider.Settings;
 import android.util.Log;
+import android.widget.RemoteViews;
 
+import com.DizWARE.ShuffleTone.R;
+import com.DizWARE.ShuffleTone.Activites.MainActivity;
 import com.DizWARE.ShuffleTone.Others.Constants;
 import com.DizWARE.ShuffleTone.Others.PlaylistIO;
 import com.DizWARE.ShuffleTone.Others.PreferenceWriter;
@@ -128,7 +132,7 @@ public class ShuffleService extends Service implements Runnable
 		
 		runShuffle();
 		
-		if(notification == NOTE_ON && this.ringerType == Constants.TYPE_TEXTS && checkSettings)
+		if((notification == NOTE_ON||notification ==DEBUG_SOUND) && this.ringerType == Constants.TYPE_TEXTS && checkSettings)
 			MessageWatch.startService(this, duration);
 		
 		Intent done = new Intent("com.DizWARE.ShuffleTone.Done");
@@ -169,12 +173,11 @@ public class ShuffleService extends Service implements Runnable
 		if(playlist.size() > 0)
 		{	
 			Log.d("ShuffleTone", "Load Complete: Playlist size = " + playlist.size());
-			if(notification == DEBUG) postNotification(this, note_sound, SUCCESS, NONE, NONE);
 		}
 		else
 		{
 			Log.e("ShuffleTone", "Load failed");
-			if(notification == DEBUG) postNotification(this, note_sound, FAILED, NONE, NONE);
+			if(notification >= DEBUG) postNotification(this, note_sound, FAILED, NONE, NONE);
 			return;
 		}
 		
@@ -187,12 +190,11 @@ public class ShuffleService extends Service implements Runnable
 			duration = next.getDuration();
 			
 			Log.d("ShuffleTone", "Set Ringtone " + next.toString());//TODO - DEBUG CODE
-			if(notification == DEBUG) postNotification(this, note_sound, SUCCESS, SUCCESS, NONE);
 		}
 		else
 		{
 			Log.e("ShuffleTone", "Next Ringtone is null. Load failed.");
-			if(notification == DEBUG) postNotification(this, note_sound, SUCCESS, FAILED, NONE);
+			if(notification >= DEBUG) postNotification(this, note_sound, SUCCESS, FAILED, NONE);
 			return;
 		}
 		
@@ -200,13 +202,14 @@ public class ShuffleService extends Service implements Runnable
 		if(playlist.size() > 0 && PlaylistIO.savePlaylist(this, directory, playlist))
 		{
 			Log.d("ShuffleTone", "Save successful");
-			if(notification == DEBUG) postNotification(this, note_sound, SUCCESS, SUCCESS, SUCCESS);
 		}
 		else
 		{
 			Log.e("ShuffleTone", "Playlist is empty or save failed. Skipping save");
-			if(notification == DEBUG) postNotification(this, note_sound, SUCCESS, SUCCESS, FAILED);
+			if(notification >= DEBUG) postNotification(this, note_sound, SUCCESS, SUCCESS, FAILED);
 		}
+		
+		if(notification >= DEBUG) postNotification(this, note_sound, SUCCESS, SUCCESS, SUCCESS);
 	}
 	
 	/***
@@ -250,7 +253,7 @@ public class ShuffleService extends Service implements Runnable
 	{
 		Notification notification = new Notification();	
 		notification.sound = Settings.System.DEFAULT_NOTIFICATION_URI;
-		sendNotification(context, notification);
+		sendNotification(context, notification, 0);
 	}
 	
 	/***
@@ -264,12 +267,70 @@ public class ShuffleService extends Service implements Runnable
 	{
 		Notification notification = new Notification();
 		
-		if(sound) notification.sound = Settings.System.DEFAULT_NOTIFICATION_URI;
-		//Get remote view
-		//Set values of the check marks
-		//Displays the current ringtone name
+		//Prepare a notification with the given icon and tucjer text
+		notification.icon = R.drawable.ic_launcher;	
+		notification.tickerText = "Playlist Loaded: " + getStatusString(loaded) + 
+								  " Playlist Shuffled: " + getStatusString(shuffled) +
+								  " Playlist saved" + getStatusString(saved);
 		
-		sendNotification(context, notification);
+		//Gets our custom layout from the resources
+		RemoteViews layout = new RemoteViews(context.getPackageName(), R.layout.debug_notification);
+		
+		//Sets the image in the given image views
+		layout.setImageViewResource(R.id.iv_loaded, getStatusImage(loaded));
+		layout.setImageViewResource(R.id.iv_shuffled, getStatusImage(shuffled));
+		layout.setImageViewResource(R.id.iv_saved, getStatusImage(saved));
+		
+		//Set the text for the ringtone that was sest
+		layout.setTextViewText(R.id.tv_current, "Current: " + 
+				RingtoneManager.getRingtone(context, Settings.System.DEFAULT_NOTIFICATION_URI).getTitle(context));
+		
+		//Set our custom layout into the notification
+		notification.contentView = layout;
+		
+		//Create an intent that will open ShuffleTone when the Notification is clicked
+		Intent intent = new Intent(context, MainActivity.class);
+		notification.contentIntent = PendingIntent.getActivity(context, 0, intent, Intent.FLAG_ACTIVITY_NEW_TASK);
+		notification.flags = Notification.FLAG_AUTO_CANCEL;
+		
+		//Send the notification
+		sendNotification(context, notification, 1);
+	}
+	
+	/***
+	 * 
+	 * @param status
+	 * @return
+	 */
+	private static int getStatusImage(int status)
+	{
+		switch(status)
+		{
+		case FAILED:
+			return R.drawable.remove;
+		case SUCCESS:
+			return R.drawable.selectbox_checked;
+		default:
+			return R.drawable.selectbox_unchecked;
+		}
+	}
+	
+	/***
+	 * Get the text status for the shuffle
+	 * @param status - a -1, 0, or 1 representing the status of certain 
+	 * @return
+	 */
+	private static String getStatusString(int status)
+	{
+		switch(status)
+		{
+		case FAILED:
+			return "Failed";
+		case SUCCESS:
+			return "Success";
+		default:
+			return "Wait";
+		}
 	}
 	
 	/***
@@ -277,11 +338,11 @@ public class ShuffleService extends Service implements Runnable
 	 * @param context - Context launching this notification
 	 * @param notification - The notification to launch or update
 	 */
-	private static void sendNotification(Context context, Notification notification)
+	private static void sendNotification(Context context, Notification notification, int noteType)
 	{		
 		NotificationManager manager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
 		notification.vibrate = new long[]{0};
-		manager.notify(NOTE_ID, notification);
+		manager.notify(NOTE_ID + noteType, notification);
 	}
 	
 	/***

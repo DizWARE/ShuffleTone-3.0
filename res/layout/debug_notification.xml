@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_debugNote"
+    style="@style/AppTheme"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    
+    <ImageView 
+        android:id="@+id/iv_icon" 
+        android:layout_width="wrap_content"
+    	android:layout_height="wrap_content" 
+        android:contentDescription="@string/loaded_status"
+        android:src="@drawable/ic_launcher"/>
+    
+    <TextView
+        android:id="@+id/tv_noteTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="false"
+        android:layout_centerInParent="false"
+        android:layout_centerVertical="false"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/iv_icon"
+        android:text="@string/note_title"
+        android:textStyle="bold" 
+        android:textAppearance="@style/NotificationTitle"/>
+    
+    <TextView
+        android:id="@+id/tv_loaded"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_noteTitle"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_toRightOf="@+id/iv_icon"
+        android:text="@string/loaded_status"
+        android:textSize="12sp"
+        android:textAppearance="@style/NotificationText" />
+
+    <ImageView 
+        android:id="@+id/iv_loaded" 
+        android:layout_width="wrap_content"
+    	android:layout_height="wrap_content" 
+        android:contentDescription="@string/loaded_status"
+        android:src="@drawable/selectbox_unchecked"
+        android:layout_toRightOf="@+id/tv_loaded"
+		android:layout_below="@id/tv_noteTitle"/>
+    
+    <TextView
+        android:id="@+id/tv_shuffled"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_noteTitle"
+        android:layout_marginTop="5dp"
+        android:layout_toRightOf="@+id/iv_loaded"
+        android:text="@string/shuffle_status"
+        android:textSize="12sp"
+        android:textAppearance="@style/NotificationText" />
+
+	<ImageView 
+	    android:id="@+id/iv_shuffled" 
+	    android:layout_width="wrap_content"
+    	android:layout_height="wrap_content" 
+	    android:contentDescription="@string/shuffle_status"
+	    android:src="@drawable/selectbox_unchecked"
+	    android:layout_toRightOf="@id/tv_shuffled"
+		android:layout_below="@id/tv_noteTitle"/>
+	
+	 <TextView
+	     android:id="@+id/tv_saved"
+	     android:layout_width="wrap_content"
+	     android:layout_height="wrap_content"
+	     android:layout_below="@id/tv_noteTitle"
+	     android:layout_marginTop="5dp"
+	     android:layout_toRightOf="@+id/iv_shuffled"
+	     android:text="@string/save_status"
+	     android:textSize="12sp"
+	     android:textAppearance="@style/NotificationText" />
+
+	<ImageView 
+	    android:id="@+id/iv_saved" 
+	    android:layout_width="wrap_content"
+    	android:layout_height="wrap_content" 
+	    android:contentDescription="@string/save_status"
+	    android:src="@drawable/selectbox_unchecked"
+	    android:layout_toRightOf="@id/tv_saved"
+		android:layout_below="@id/tv_noteTitle"/>
+
+	
+	<TextView 
+	    android:id="@+id/tv_current"
+	    android:layout_width="wrap_content"
+    	android:layout_height="wrap_content"
+    	android:lines="1" 
+	    android:layout_below="@+id/iv_loaded"
+	    android:layout_toRightOf="@+id/iv_icon"
+	    android:textSize="12sp"
+	    android:textAppearance="@style/NotificationText"/>
+</RelativeLayout>

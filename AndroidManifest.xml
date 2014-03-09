@@ -1,10 +1,14 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-      package="com.DizWARE.ShuffleTone"
-      android:versionName="3.0.5" android:versionCode="20" android:installLocation="auto">
+<?xml version="1.0" encoding="utf-8"?>
+<manifest 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.DizWARE.ShuffleTone"
+    android:versionName="3.1" 
+    android:versionCode="21" 
+    android:installLocation="auto">
 
     <uses-sdk
         android:minSdkVersion="8"
-        android:targetSdkVersion="18" />
+        android:targetSdkVersion="19" />
     
 <uses-permission android:name="android.permission.WRITE_SETTINGS"></uses-permission>
 <uses-permission android:name="android.permission.READ_PHONE_STATE"></uses-permission>
@@ -13,6 +17,7 @@
 <uses-permission android:name="android.permission.RECEIVE_MMS"></uses-permission>
 <uses-permission android:name="android.permission.READ_SMS"></uses-permission>
 <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
+<uses-permission android:name="android.permission.VIBRATE"/>
     
     <application
         android:allowBackup="true"

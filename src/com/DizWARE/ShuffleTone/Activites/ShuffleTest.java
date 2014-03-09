@@ -9,8 +9,10 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.telephony.TelephonyManager;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -47,6 +49,8 @@ public class ShuffleTest extends Activity implements Runnable
 	String oldTitle = "";
 	String newTitle = "";
 	
+	BroadcastReceiver doneReceiver;
+	
 	/***
 	 * Creates the UI for this activity
 	 */
@@ -80,7 +84,7 @@ public class ShuffleTest extends Activity implements Runnable
 		/***
 		 * Creates a message receiver that will receive the message from the ShuffleService when it is finished
 		 */
-		BroadcastReceiver doneReceiver = new BroadcastReceiver() 
+		doneReceiver = new BroadcastReceiver() 
 		{
 			@Override public void onReceive(Context context, Intent intent) 
 			{
@@ -109,7 +113,24 @@ public class ShuffleTest extends Activity implements Runnable
 				else tv_old.setText(oldTitle);
 				tv_new.setText("Retrieving...");
 			}
-		});		
+		});	
+		
+		/***
+		 * Sets the click action of the button to open a sms compose window with the users phone number and a test message
+		 */
+		btn_message.setOnClickListener(new OnClickListener()
+		{			
+			@Override public void onClick(View v)
+			{
+				TelephonyManager phoneManager = (TelephonyManager)ShuffleTest.this.getSystemService(Context.TELEPHONY_SERVICE);
+				String phoneNumber = phoneManager.getLine1Number();				
+				Uri sms_uri = Uri.parse("smsto:"+phoneNumber); 
+				
+		        Intent composeMessage = new Intent(Intent.ACTION_SENDTO, sms_uri); 
+		        composeMessage.putExtra("sms_body", "This is a Test Message from ShuffleTone"); 
+		        startActivity(composeMessage); 
+			}
+		});
 		
 		/***
 		 * Turns on or off the TextTone override feature. 
@@ -119,8 +140,37 @@ public class ShuffleTest extends Activity implements Runnable
 			@Override public void onCheckedChanged(CompoundButton buttonView,
 					boolean isChecked)
 			{
-				if(isChecked)	PreferenceWriter.intWriter(settings, "notification", 1);
-				else			PreferenceWriter.intWriter(settings, "notification", 0);
+				int value = 0;
+				if(isChecked && tb_debugNote.isChecked()) 
+					value = 3;
+				else if(isChecked) 
+					value = 1;
+				else if(tb_debugNote.isChecked()) 
+					value = 2;
+				else 
+					value = 0;
+				
+				PreferenceWriter.intWriter(settings, "notification", value);
+				super.onCheckedChanged(buttonView, isChecked);
+			}
+		});
+		
+		tb_debugNote.setOnCheckedChangeListener(new OnCheckBoxChangedListener()
+		{
+			@Override public void onCheckedChanged(CompoundButton buttonView,
+					boolean isChecked)
+			{
+				int value = 0;
+				if(isChecked && tb_notification.isChecked()) 
+					value = 3;
+				else if(isChecked) 
+					value = 2;
+				else if(tb_notification.isChecked()) 
+					value = 1;
+				else 
+					value = 0;
+				
+				PreferenceWriter.intWriter(settings, "notification", value);
 				super.onCheckedChanged(buttonView, isChecked);
 			}
 		});
@@ -140,9 +190,20 @@ public class ShuffleTest extends Activity implements Runnable
 		});
 		
 		//Set the box based on the setting
-		tb_notification.setChecked(settings.getInt("notification", 0) == 1||settings.getInt("notification", 0) == 3);
-		tb_debugNote.setChecked(settings.getInt("notification", 0) == 2||settings.getInt("notification", 0) == 3);
+		int noteType = settings.getInt("notification", 0);
+		
+		tb_notification.setChecked(noteType == 1||noteType == 3);
+		tb_debugNote.setChecked(noteType == 2||noteType == 3);
 		tb_power.setChecked(settings.getBoolean(Constants.SETTINGS_TXT_PWR, false));
+	}
+	
+	/***
+	 * Unregisters our broadcast receiver so that it doesn't leak after exiting
+	 */
+	@Override protected void onDestroy()
+	{
+		this.unregisterReceiver(doneReceiver);
+		super.onDestroy();
 	}
 
 	/***
@@ -164,6 +225,11 @@ public class ShuffleTest extends Activity implements Runnable
 		if(ringtone != null) newTitle = ringtone.getTitle(this);
 	}
 	
+	/***
+	 * Handles the basic operation of the check boxes when clicked
+	 * @author Tyler Robinson
+	 *
+	 */
 	private abstract class OnCheckBoxChangedListener implements OnCheckedChangeListener
 	{
 		@Override public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)

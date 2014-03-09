@@ -21,6 +21,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
+import android.widget.ScrollView;
 import android.widget.SlidingDrawer;
 import android.widget.SlidingDrawer.OnDrawerCloseListener;
 import android.widget.SlidingDrawer.OnDrawerOpenListener;
@@ -49,7 +50,7 @@ public class MainActivity extends Activity
 	
 	RelativeLayout frameLayout;
 	RelativeLayout rl_title;
-	LinearLayout ll_content;
+	ScrollView sv_content;
 	
 	SlidingDrawer sd_main;	
 	DrawerLayout drawer;
@@ -118,13 +119,13 @@ public class MainActivity extends Activity
 	 */
 	private void prepareFrame()
 	{
-		ll_content = (LinearLayout)this.getLayoutInflater().inflate(R.layout.main_layout, null);		
+		sv_content = (ScrollView)this.getLayoutInflater().inflate(R.layout.main_layout, null);		
 		rl_title = new RelativeLayout(this);
 		
 		prepareContent();
 		prepareTitle();
 		
-		frameLayout = LayoutFrame.createFrame(this.getLayoutInflater(), ll_content, rl_title, R.drawable.slidersettings);
+		frameLayout = LayoutFrame.createFrame(this.getLayoutInflater(), sv_content, rl_title, R.drawable.slidersettings);
 		
 		sd_main = (SlidingDrawer)frameLayout.findViewById(R.id.sd_options);		
 		drawer = new DrawerLayout(this.getLayoutInflater(), (FrameLayout)sd_main.getContent());
@@ -136,11 +137,11 @@ public class MainActivity extends Activity
 	 */
 	private void prepareContent()
 	{		
-		tv_power = (TextView)ll_content.findViewById(R.id.tv_powerStation);
-		tv_backup =  (TextView)ll_content.findViewById(R.id.tv_backup);
-		tv_browser = (TextView)ll_content.findViewById(R.id.tv_filebrowser);
-		tv_viewCurrent = (TextView)ll_content.findViewById(R.id.tv_viewCurrent);
-		tv_test = (TextView)ll_content.findViewById(R.id.tv_test);
+		tv_power = (TextView)sv_content.findViewById(R.id.tv_powerStation);
+		tv_backup =  (TextView)sv_content.findViewById(R.id.tv_backup);
+		tv_browser = (TextView)sv_content.findViewById(R.id.tv_filebrowser);
+		tv_viewCurrent = (TextView)sv_content.findViewById(R.id.tv_viewCurrent);
+		tv_test = (TextView)sv_content.findViewById(R.id.tv_test);
 		
 		//Set up and launch the power selection dialog
 		tv_power.setOnClickListener(new OnClickListener(){
@@ -345,16 +346,16 @@ public class MainActivity extends Activity
 		//When drawer opens, turn off the buttons in the main screen
 		sd_main.setOnDrawerOpenListener(new OnDrawerOpenListener() {			
 			@Override public void onDrawerOpened() {
-				for(int i = 0; i < ll_content.getChildCount(); i++)
-					ll_content.getChildAt(i).setEnabled(false);
+				for(int i = 0; i < sv_content.getChildCount(); i++)
+					sv_content.getChildAt(i).setEnabled(false);
 			}
 		});
 		
 		//When drawer closes, turn on the buttons in the main screen
 		sd_main.setOnDrawerCloseListener(new OnDrawerCloseListener() {			
 			@Override public void onDrawerClosed() {
-				for(int i = 0; i < ll_content.getChildCount(); i++)
-					ll_content.getChildAt(i).setEnabled(true);
+				for(int i = 0; i < sv_content.getChildCount(); i++)
+					sv_content.getChildAt(i).setEnabled(true);
 				
 				drawer.setContent(appSettings.prepareSettings());
 				drawer.setTitle(new View(MainActivity.this));

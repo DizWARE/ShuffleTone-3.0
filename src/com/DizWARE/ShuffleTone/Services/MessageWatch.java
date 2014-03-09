@@ -11,6 +11,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.IBinder;
+import android.util.Log;
 
 /***
  * Watches for a change in the SMS content. If there is, cancel the ringtone
@@ -44,19 +45,21 @@ public class MessageWatch extends Service
 	 */
 	@Override public int onStartCommand(Intent intent, int flags, int startId)
 	{
-		int temp = unreadCount;
+		int tempUnread = unreadCount;
+		int tempTotal = messageCount;
 		ShuffleService.postNotification(this);
-		
+		Log.d("ShuffleTone", "Launching Notification");
 		//Counts our messages and unread messages. If our count is the same as what we had before the call, we are probably in the 
 			//Conversation that this message belongs to; Stop the ringtone and stop this service if wea are in the conversation
 		countUnread();			
-		if(temp == unreadCount)
+		if(tempUnread == unreadCount && tempTotal != messageCount)
 		{ ShuffleService.cancelNotification(this); this.stopSelf();}
 		
 		/***
 		 * We want to avoid running too long. This will post a timer for the duration of the ringtone, and kill the service when it dings
 		 * The cool thing is that we can have multiple calls but only will cancel the service when we are completely done with running it
 		 */
+		if(timer != null) timer.cancel();
 		timer = new Timer("watch");
 		timer.schedule(new TimerTask()
 		{			

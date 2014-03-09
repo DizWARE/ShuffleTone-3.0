@@ -99,7 +99,7 @@ public class AppSettings
 			{				
 				//TODO Remember to fix this!!!
 			   /* Create the Intent */  
-			   final Intent emailIntent = new Intent();  
+			   final Intent emailIntent = new Intent(Intent.ACTION_SEND);  
 			     
 			   /* Fill it with Data */  
 			   emailIntent.setType("plain/text");  
