@@ -280,10 +280,12 @@ public class ShuffleService extends Service implements Runnable
 		layout.setImageViewResource(R.id.iv_loaded, getStatusImage(loaded));
 		layout.setImageViewResource(R.id.iv_shuffled, getStatusImage(shuffled));
 		layout.setImageViewResource(R.id.iv_saved, getStatusImage(saved));
-		
-		//Set the text for the ringtone that was sest
-		layout.setTextViewText(R.id.tv_current, "Current: " + 
-				RingtoneManager.getRingtone(context, Settings.System.DEFAULT_NOTIFICATION_URI).getTitle(context));
+		android.media.Ringtone current = RingtoneManager.getRingtone(context, Settings.System.DEFAULT_NOTIFICATION_URI);
+		if(current != null)		
+			//Set the text for the ringtone that was sest
+			layout.setTextViewText(R.id.tv_current, "Current: " + current.getTitle(context));
+		else
+			layout.setTextViewText(R.id.tv_current, "Failed to Load");
 		
 		//Set our custom layout into the notification
 		notification.contentView = layout;
