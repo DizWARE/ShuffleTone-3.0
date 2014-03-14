@@ -132,7 +132,7 @@ public class ShuffleService extends Service implements Runnable
 		
 		runShuffle();
 		
-		if((notification == NOTE_ON||notification ==DEBUG_SOUND) && this.ringerType == Constants.TYPE_TEXTS && checkSettings)
+		if((notification == NOTE_ON) && this.ringerType == Constants.TYPE_TEXTS && checkSettings)
 			MessageWatch.startService(this, duration);
 		
 		Intent done = new Intent("com.DizWARE.ShuffleTone.Done");
@@ -287,6 +287,8 @@ public class ShuffleService extends Service implements Runnable
 		else
 			layout.setTextViewText(R.id.tv_current, "Failed to Load");
 		
+		if(sound)
+			notification.sound = Settings.System.DEFAULT_NOTIFICATION_URI;
 		//Set our custom layout into the notification
 		notification.contentView = layout;
 		
