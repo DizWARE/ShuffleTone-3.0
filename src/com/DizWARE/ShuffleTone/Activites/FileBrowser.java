@@ -24,7 +24,6 @@ import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -49,6 +48,7 @@ import com.DizWARE.ShuffleTone.Activites.ListDialog.OnOkClick;
 import com.DizWARE.ShuffleTone.Others.Actions;
 import com.DizWARE.ShuffleTone.Others.Constants;
 import com.DizWARE.ShuffleTone.Others.FilterType;
+import com.DizWARE.ShuffleTone.Others.Log;
 import com.DizWARE.ShuffleTone.Others.PlaylistIO;
 import com.DizWARE.ShuffleTone.Others.Ringtone;
 import com.DizWARE.ShuffleTone.Others.RingtonePlaylist;
@@ -105,6 +105,8 @@ public class FileBrowser extends Activity
 	ListTypeChooser mChooserDialog;
 	ProgressDialog saveProgressDialog;
 	
+	Log log;
+	
 	/***
 	 * Creates the file browser activity
 	 */
@@ -115,6 +117,7 @@ public class FileBrowser extends Activity
 		if(savedInstanceState != null)
 			restoreState(savedInstanceState);
 	
+		log = new Log(this);
 		prepareFrame();
 		this.setContentView(frameLayout);	
 		
@@ -134,7 +137,7 @@ public class FileBrowser extends Activity
 			this.unregisterReceiver(mViewReceiver);
 		}catch(IllegalArgumentException e)
 		{
-			Log.e("ShuffleTone", "Did not correctly register, or unregister this receiver. Fail silently");
+			log.e( "Did not correctly register, or unregister this receiver. Fail silently");
 		}
 		super.onDestroy();
 	}
@@ -325,7 +328,7 @@ public class FileBrowser extends Activity
 		try
 		{
 			runScan(cursor, Constants.LOC_EXTERNAL);	
-		}catch(Exception e){Log.e("ShuffleTone","Failed External scan");}
+		}catch(Exception e){log.e("Failed External scan");}
 		
 		
 		//Media on phone
@@ -335,7 +338,7 @@ public class FileBrowser extends Activity
 		try
 		{
 			runScan(cursor, Constants.LOC_INTERNAL);	
-		}catch(Exception e){Log.e("ShuffleTone","Failed Internal scan");}
+		}catch(Exception e){log.e("Failed Internal scan");}
 		
 		//New projection for DRM(its special, so this is all that is visible in cursor)
 		proj = new String[]{MediaStore.Audio.Media.DATA,
@@ -349,7 +352,7 @@ public class FileBrowser extends Activity
 		try
 		{
 			runDRM(cursor);
-		}catch(Exception e){Log.e("ShuffleTone","Failed DRM scan");}
+		}catch(Exception e){log.e("Failed DRM scan");}
 		
 		mAdapter.copy(mAllRingtones);		
 		
@@ -456,7 +459,7 @@ public class FileBrowser extends Activity
 							FileBrowser.this.unregisterReceiver(this);
 						} catch(IllegalArgumentException e)
 						{
-							Log.e("ShuffleTone", "Did not correctly register, or unregister this receiver. Fail silently");
+							log.e( "Did not correctly register, or unregister this receiver. Fail silently");
 						}
 						
 						
@@ -493,7 +496,7 @@ public class FileBrowser extends Activity
 						FileBrowser.this.unregisterReceiver(saveReceiver);
 					}catch(IllegalArgumentException e)
 					{
-						Log.e("ShuffleTone", "Did not correctly register, or unregister this receiver. Fail silently");
+						log.e( "Did not correctly register, or unregister this receiver. Fail silently");
 					}
 					FileBrowser.this.finish(); 
 					return true;					

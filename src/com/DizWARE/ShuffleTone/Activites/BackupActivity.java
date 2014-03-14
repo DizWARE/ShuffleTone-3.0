@@ -15,7 +15,6 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -37,6 +36,7 @@ import android.widget.ToggleButton;
 import com.DizWARE.ShuffleTone.R;
 import com.DizWARE.ShuffleTone.Others.Actions;
 import com.DizWARE.ShuffleTone.Others.Constants;
+import com.DizWARE.ShuffleTone.Others.Log;
 import com.DizWARE.ShuffleTone.Others.PlaylistIO;
 import com.DizWARE.ShuffleTone.Others.PreferenceWriter;
 import com.DizWARE.ShuffleTone.Others.RingtonePlaylist;
@@ -76,6 +76,8 @@ public class BackupActivity extends Activity
 	BroadcastReceiver mRestoreReceiver;
 	ProgressDialog restoreDialog;
 	
+	Log log;
+	
 	/***
 	 * Creates this activity.
 	 */
@@ -86,6 +88,7 @@ public class BackupActivity extends Activity
 		prepareFrame();
 		this.setContentView(frameLayout);
 		
+		log = new Log(this);
 		mFilepath = this.getIntent().getStringExtra("filepath");
 		
 		if(mFilepath.equals(Constants.DEFAULT_CALLS))
@@ -170,7 +173,7 @@ public class BackupActivity extends Activity
 				this.unregisterReceiver(mRestoreReceiver);
 			}catch(IllegalArgumentException e)
 			{
-				Log.e("ShuffleTone", "Did not correctly register, or unregister this receiver. Fail silently");
+				log.e( "Did not correctly register, or unregister this receiver. Fail silently");
 			}
 		}
 		if(restoreDialog != null && restoreDialog.isShowing()) restoreDialog.cancel();
@@ -284,7 +287,7 @@ public class BackupActivity extends Activity
 							BackupActivity.this.unregisterReceiver(this);
 						}catch(IllegalArgumentException e)
 						{
-							Log.e("ShuffleTone", "Did not correctly register, or unregister this receiver. Fail silently");
+							log.e( "Did not correctly register, or unregister this receiver. Fail silently");
 						}
 						
 						mPlaylist = (RingtonePlaylist)loadIntent.getSerializableExtra("playlist");
@@ -445,7 +448,7 @@ public class BackupActivity extends Activity
 						
 						filelist[i].delete();
 					} catch (Exception e) {
-						Log.e("ShuffleTone", "Failed to restore " + filelist[i]);
+						log.e( "Failed to restore " + filelist[i]);
 					}
 					
 					BackupActivity.this.sendBroadcast(intent);					
@@ -573,7 +576,7 @@ public class BackupActivity extends Activity
 									BackupActivity.this.unregisterReceiver(this);
 								}catch(IllegalArgumentException e)
 								{
-									Log.e("ShuffleTone", "Did not correctly register, or unregister this receiver. Fail silently");
+									log.e( "Did not correctly register, or unregister this receiver. Fail silently");
 								}
 								mAdapter.refresh();
 								
@@ -684,7 +687,7 @@ public class BackupActivity extends Activity
 								BackupActivity.this.unregisterReceiver(this);
 							}catch(IllegalArgumentException e)
 							{
-								Log.e("ShuffleTone", "Did not correctly register, or unregister this receiver. Fail silently");
+								log.e( "Did not correctly register, or unregister this receiver. Fail silently");
 							}
 							IntentFilter filter = new IntentFilter(Actions.SaveComplete.toString());
 							mPlaylist = (RingtonePlaylist)loadIntent.getSerializableExtra("playlist");
@@ -701,7 +704,7 @@ public class BackupActivity extends Activity
 										BackupActivity.this.unregisterReceiver(this);
 									}catch(IllegalArgumentException e)
 									{
-										Log.e("ShuffleTone", "Did not correctly register, or unregister this receiver. Fail silently");
+										log.e( "Did not correctly register, or unregister this receiver. Fail silently");
 									}
 									
 									ShuffleService.startService(BackupActivity.this, false, mFilepath);

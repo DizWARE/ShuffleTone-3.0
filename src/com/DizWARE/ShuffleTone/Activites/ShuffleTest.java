@@ -36,6 +36,7 @@ public class ShuffleTest extends Activity implements Runnable
 	TextView tv_current;
 	TextView tv_old;
 	TextView tv_new;
+	TextView tv_log;
 	
 	Button btn_shuffle;
 	Button btn_message;
@@ -50,6 +51,7 @@ public class ShuffleTest extends Activity implements Runnable
 	String newTitle = "";
 	
 	BroadcastReceiver doneReceiver;
+	BroadcastReceiver logReceiver;
 	
 	/***
 	 * Creates the UI for this activity
@@ -63,6 +65,7 @@ public class ShuffleTest extends Activity implements Runnable
 		tv_current = (TextView)this.findViewById(R.id.tv_current);
 		tv_new = (TextView)this.findViewById(R.id.tv_new);
 		tv_old = (TextView)this.findViewById(R.id.tv_old);
+		tv_log = (TextView)this.findViewById(R.id.tv_log);
 		
 		//Initialize Buttons
 		btn_shuffle = (Button)this.findViewById(R.id.btn_shuffle);
@@ -95,6 +98,9 @@ public class ShuffleTest extends Activity implements Runnable
 				while(t.isAlive());
 				tv_current.setText(newTitle);
 				tv_new.setText(newTitle);
+				
+				Intent logUpdate = new Intent("com.DizWARE.ShuffleTone.Log.Update");
+				sendBroadcast(logUpdate);
 			}
 		};		
 		this.registerReceiver(doneReceiver, new IntentFilter("com.DizWARE.ShuffleTone.Done"));
@@ -112,6 +118,7 @@ public class ShuffleTest extends Activity implements Runnable
 				if(newTitle != "") tv_old.setText(newTitle);
 				else tv_old.setText(oldTitle);
 				tv_new.setText("Retrieving...");
+				
 			}
 		});	
 		
@@ -195,6 +202,17 @@ public class ShuffleTest extends Activity implements Runnable
 		tb_notification.setChecked(noteType == 1||noteType == 3);
 		tb_debugNote.setChecked(noteType == 2||noteType == 3);
 		tb_power.setChecked(settings.getBoolean(Constants.SETTINGS_TXT_PWR, false));
+		
+		logReceiver = new BroadcastReceiver() 
+		{
+			@Override public void onReceive(Context context, Intent intent) 
+			{
+				tv_log.setText(settings.getString("log", ""));
+			}
+		};	
+		this.registerReceiver(logReceiver, new IntentFilter("com.DizWARE.ShuffleTone.Log.Update"));
+		
+		tv_log.setText(settings.getString("log", ""));
 	}
 	
 	/***
@@ -203,6 +221,7 @@ public class ShuffleTest extends Activity implements Runnable
 	@Override protected void onDestroy()
 	{
 		this.unregisterReceiver(doneReceiver);
+		this.unregisterReceiver(logReceiver);
 		super.onDestroy();
 	}
 

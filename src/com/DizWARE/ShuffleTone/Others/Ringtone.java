@@ -8,7 +8,6 @@ import android.database.Cursor;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.provider.MediaStore;
-import android.util.Log;
 
 /***
  * This class defines a ringtone. This keeps track of all the 
@@ -357,7 +356,7 @@ public class Ringtone implements Comparable<Ringtone>, Serializable
 		
 		if(player == null)
 		{
-			Log.e("ShuffleTone", "Failed to load ringtone. Ringtone " + this.title + " will not play");
+			Log.e(context, "Failed to load ringtone. Ringtone " + this.title + " will not play");
 			return;
 		}
 

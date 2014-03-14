@@ -6,9 +6,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.util.Log;
 
 import com.DizWARE.ShuffleTone.Others.Constants;
+import com.DizWARE.ShuffleTone.Others.Log;
 import com.DizWARE.ShuffleTone.Others.SettingTags;
 import com.DizWARE.ShuffleTone.Services.ShuffleService;
 
@@ -25,7 +25,7 @@ public class AlarmReceiver extends BroadcastReceiver
 	{
 		int ringerType = intent.getIntExtra(SettingTags.ringerType.toString(), Constants.TYPE_CALLS);
 		
-		Log.d("ShuffleTone", "Alarm has gone off for Ringer Type: " + ringerType);//TODO - DEBUG CODE
+		Log.d(context, "Alarm has gone off for Ringer Type: " + ringerType);//TODO - DEBUG CODE
 		
 		startAlarm(context,ringerType);
 		ShuffleService.startService(context, true, ringerType);
@@ -42,7 +42,7 @@ public class AlarmReceiver extends BroadcastReceiver
 		if(!settings.getBoolean(ringerType + SettingTags.useHours.toString(), false)) return;		
 		int delay = settings.getInt(ringerType + SettingTags.maxCount.toString(), 1);
 
-		Log.d("ShuffleTone", "Alarm turned on - Goes off in " + delay + " hour(s)");//TODO - DEBUG CODE
+		Log.d(context, "Alarm turned on - Goes off in " + delay + " hour(s)");//TODO - DEBUG CODE
 		
 		AlarmManager alarmManager =	(AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 		alarmManager.set(AlarmManager.RTC, System.currentTimeMillis() +

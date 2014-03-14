@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.media.MediaPlayer;
 import android.os.Handler;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
@@ -23,6 +22,7 @@ import android.widget.Toast;
 import com.DizWARE.ShuffleTone.R;
 import com.DizWARE.ShuffleTone.Others.Actions;
 import com.DizWARE.ShuffleTone.Others.Constants;
+import com.DizWARE.ShuffleTone.Others.Log;
 import com.DizWARE.ShuffleTone.Others.PlaylistIO;
 import com.DizWARE.ShuffleTone.Others.Ringtone;
 import com.DizWARE.ShuffleTone.Others.RingtonePlaylist;
@@ -32,6 +32,7 @@ public class ViewListDialog extends ListDialog<Ringtone>
 	private static final long serialVersionUID = -4648130473449044372L;
 	TextView tv_ringtoneCount;
 
+	Log log;
 	/***
 	 * Constructor - Creates a dialog that shows the given list of ringtones
 	 * 
@@ -56,6 +57,7 @@ public class ViewListDialog extends ListDialog<Ringtone>
 			}			
 		});	
 		
+		log = new Log(context);
 		PrepareTitle(addTitle);
 	}
 	
@@ -121,7 +123,7 @@ public class ViewListDialog extends ListDialog<Ringtone>
 					context.unregisterReceiver(this);
 				}catch(IllegalArgumentException e)
 				{
-					Log.e("ShuffleTone", "Did not correctly register, or unregister this receiver. Fail silently");
+					log.e("Did not correctly register, or unregister this receiver. Fail silently");
 				}
 				
 				if(!intent.getBooleanExtra("success", false))

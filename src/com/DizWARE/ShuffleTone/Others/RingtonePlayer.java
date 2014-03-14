@@ -2,7 +2,6 @@ package com.DizWARE.ShuffleTone.Others;
 
 import android.content.Context;
 import android.media.MediaPlayer;
-import android.util.Log;
 
 public class RingtonePlayer 
 {
@@ -22,7 +21,7 @@ public class RingtonePlayer
 		
 		if(ringtonePlayer == null)
 		{
-			Log.e("ShuffleTone", "Failed to load ringtone. Ringtone " + ringtone.getTitle() + " will not play");
+			Log.e(context, "Failed to load ringtone. Ringtone " + ringtone.getTitle() + " will not play");
 			return null;
 		}
 		

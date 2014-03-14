@@ -10,12 +10,12 @@ import android.content.SharedPreferences;
 import android.media.RingtoneManager;
 import android.os.IBinder;
 import android.provider.Settings;
-import android.util.Log;
 import android.widget.RemoteViews;
 
 import com.DizWARE.ShuffleTone.R;
 import com.DizWARE.ShuffleTone.Activites.MainActivity;
 import com.DizWARE.ShuffleTone.Others.Constants;
+import com.DizWARE.ShuffleTone.Others.Log;
 import com.DizWARE.ShuffleTone.Others.PlaylistIO;
 import com.DizWARE.ShuffleTone.Others.PreferenceWriter;
 import com.DizWARE.ShuffleTone.Others.Ringtone;
@@ -48,6 +48,7 @@ public class ShuffleService extends Service implements Runnable
 	private static final int NONE = 0;
 	private static final int DEBUG = 2;
 	private static final int DEBUG_SOUND = 3;
+	Log log;
 	
 	
 	/***
@@ -59,7 +60,7 @@ public class ShuffleService extends Service implements Runnable
 	{		
 		this.intent = intent;
 		
-		Log.d("ShuffleTone","Starting Shuffle Service");
+		log = Log.d(this,"Starting Shuffle Service");
 		
 		Thread thread = new Thread(this);
 		thread.start();		
@@ -71,7 +72,7 @@ public class ShuffleService extends Service implements Runnable
 	 * Handle the destruction of the service
 	 */
 	@Override public void onDestroy() {
-		Log.d("ShuffleTone","Destroying Shuffle Service");
+		log.d("Destroying Shuffle Service");
 		
 		super.onDestroy();
 	}
@@ -81,7 +82,7 @@ public class ShuffleService extends Service implements Runnable
 	 */
 	@Override public void run() 
 	{
-		Log.d("ShuffleTone","Thread Started");
+		log.d("Thread Started");
 		
 		boolean checkSettings = intent.getBooleanExtra(SettingTags.checkSettings.toString(), true);
 		boolean hasFilename = intent.getBooleanExtra("hasFilename", false);
@@ -120,8 +121,8 @@ public class ShuffleService extends Service implements Runnable
 			powerSettings = Constants.SETTINGS_TXT_PWR;
 		}
 		
-		Log.d("ShuffleTone","Ringer Type: " + ringerType + " Power Settings: " + powerSettings + " Directory: " + directory);
-		Log.d("ShuffleTone","Check Settings: " + checkSettings);
+		log.d("Ringer Type: " + ringerType + " Power Settings: " + powerSettings + " Directory: " + directory);
+		log.d("Check Settings: " + checkSettings);
 		
 		//Checks to see if we should be running this service right now. This includes evaluating the 
 			//power settings and the run count
@@ -151,7 +152,7 @@ public class ShuffleService extends Service implements Runnable
 		int current = settings.getInt(ringerType + SettingTags.currentCount.toString(), 1);
 		int max = settings.getInt(ringerType + SettingTags.maxCount.toString(), 1);		
 		
-		Log.d("ShuffleTone","Checking Count: Current = " + current + " / Max = " + max);
+		log.d("Checking Count: Current = " + current + " / Max = " + max);
 		if(current >= max) {
 			PreferenceWriter.intWriter(settings, ringerType + SettingTags.currentCount.toString(), 1);
 			return true;
@@ -172,11 +173,11 @@ public class ShuffleService extends Service implements Runnable
 		//Load the playlist and waits registers a wait for it to finish
 		if(playlist.size() > 0)
 		{	
-			Log.d("ShuffleTone", "Load Complete: Playlist size = " + playlist.size());
+			log.d( "Load Complete: Playlist size = " + playlist.size());
 		}
 		else
 		{
-			Log.e("ShuffleTone", "Load failed");
+			log.e( "Load failed");
 			if(notification >= DEBUG) postNotification(this, note_sound, FAILED, NONE, NONE);
 			return;
 		}
@@ -189,11 +190,11 @@ public class ShuffleService extends Service implements Runnable
 			RingtoneManager.setActualDefaultRingtoneUri(this, ringerType, next.getURI());
 			duration = next.getDuration();
 			
-			Log.d("ShuffleTone", "Set Ringtone " + next.toString());//TODO - DEBUG CODE
+			log.d( "Set Ringtone " + next.toString());//TODO - DEBUG CODE
 		}
 		else
 		{
-			Log.e("ShuffleTone", "Next Ringtone is null. Load failed.");
+			log.e( "Next Ringtone is null. Load failed.");
 			if(notification >= DEBUG) postNotification(this, note_sound, SUCCESS, FAILED, NONE);
 			return;
 		}
@@ -201,11 +202,11 @@ public class ShuffleService extends Service implements Runnable
 		//Save the list again
 		if(playlist.size() > 0 && PlaylistIO.savePlaylist(this, directory, playlist))
 		{
-			Log.d("ShuffleTone", "Save successful");
+			log.d( "Save successful");
 		}
 		else
 		{
-			Log.e("ShuffleTone", "Playlist is empty or save failed. Skipping save");
+			log.e( "Playlist is empty or save failed. Skipping save");
 			if(notification >= DEBUG) postNotification(this, note_sound, SUCCESS, SUCCESS, FAILED);
 		}
 		

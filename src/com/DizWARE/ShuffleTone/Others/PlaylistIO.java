@@ -11,7 +11,6 @@ import java.io.StreamCorruptedException;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 
 /***
  * This class contains several methods that interacts with the file system, that allows for flattening 
@@ -43,6 +42,7 @@ public class PlaylistIO
 		Thread thread = new Thread(new Runnable(){
 			@Override public void run() {
 				boolean didSave = false;
+				Log log = new Log(context);
 				while(locked);
 				locked = true;
 				
@@ -50,7 +50,7 @@ public class PlaylistIO
 					if(!checkFolder())
 						throw new IOException();
 					
-					Log.d("ShuffleTone", "Save started");//TODO - DEBUG CODE
+					log.d("Save started");//TODO - DEBUG CODE
 					
 					//Using the magic of serializable objects, flatten the object and save it to our given file
 					FileOutputStream out = new FileOutputStream(filename);
@@ -61,12 +61,12 @@ public class PlaylistIO
 					didSave = true;
 					locked = false;
 				} catch (FileNotFoundException e) {
-					Log.e("ShuffleTone", "File location " + filename + " was not found\n" + e.toString());
+					log.e("File location " + filename + " was not found\n" + e.toString());
 				} catch (IOException e) {
-					Log.e("ShuffleTone", "File " + filename + " could not be saved.\n" + e.toString());
+					log.e("File " + filename + " could not be saved.\n" + e.toString());
 				}
 
-				Log.d("ShuffleTone", "Save complete: " + didSave);//TODO - DEBUG CODE
+				log.d("Save complete: " + didSave);//TODO - DEBUG CODE
 				
 				context.sendBroadcast(intent);
 			}});		
@@ -94,6 +94,7 @@ public class PlaylistIO
 		Thread thread = new Thread(new Runnable(){
 			@Override public void run() {
 				boolean didLoad = false;	
+				Log log = new Log(context);
 				while(locked);
 				locked = true;
 				
@@ -101,29 +102,29 @@ public class PlaylistIO
 					if(!checkFolder())
 						throw new IOException();
 
-					Log.d("ShuffleTone", "Preparing to load");//TODO - DEBUG CODE
+					log.d("Preparing to load");//TODO - DEBUG CODE
 					
 					//With the magic of serializable interface, we unflatten the RingtonePlaylist object
 						//at the given file location
 					FileInputStream in = new FileInputStream(filename);
 					ObjectInputStream objectStream = new ObjectInputStream(in);	
-					Log.d("ShuffleTone", "Stream Size: " + in.available() + " bytes");
+					log.d( "Stream Size: " + in.available() + " bytes");
 					playlist.copyPlaylist((RingtonePlaylist)objectStream.readObject()); 
 					objectStream.close();
 					in.close();
 					didLoad = true;
 					locked = false;
 				} catch (ClassNotFoundException e) { 
-					Log.e("ShuffleTone", "Failed to typecast.\n" + e.toString()); 
+					log.e("Failed to typecast.\n" + e.toString()); 
 				} catch (FileNotFoundException e) {
-					Log.e("ShuffleTone", "File " + filename + " could not be found.\n" + e.toString()); 
+					log.e("File " + filename + " could not be found.\n" + e.toString()); 
 				} catch (StreamCorruptedException e) {
-					Log.e("ShuffleTone", "Object Stream is corrupted\n" + e.toString());
+					log.e( "Object Stream is corrupted\n" + e.toString());
 				} catch (IOException e) {
-					Log.e("ShuffleTone", "Failed to load " + filename +".\n" + e.toString()); 
+					log.e( "Failed to load " + filename +".\n" + e.toString()); 
 				}				
 
-				Log.d("ShuffleTone", "Load complete: " + didLoad);//TODO - DEBUG CODE
+				log.d("Load complete: " + didLoad);//TODO - DEBUG CODE
 				intent.putExtra("didLoad", didLoad);
 				
 				context.sendBroadcast(intent);
@@ -134,12 +135,12 @@ public class PlaylistIO
 	public static synchronized boolean savePlaylist(Context context, String filename, RingtonePlaylist playlist)
 	{
 		boolean didSave = false;
-		
+		Log log = new Log(context);
 		try {
 			if(!checkFolder())
 				throw new IOException();
 			
-			Log.d("ShuffleTone", "Save started");//TODO - DEBUG CODE
+			log.d( "Save started");//TODO - DEBUG CODE
 			
 			//Using the magic of serializable objects, flatten the object and save it to our given file
 			FileOutputStream out = new FileOutputStream(filename);
@@ -149,12 +150,12 @@ public class PlaylistIO
 			out.close();
 			didSave = true;
 		} catch (FileNotFoundException e) {
-			Log.e("ShuffleTone", "File location " + filename + " was not found\n" + e.toString());
+			log.e("File location " + filename + " was not found\n" + e.toString());
 		} catch (IOException e) {
-			Log.e("ShuffleTone", "File " + filename + " could not be saved.\n" + e.toString());
+			log.e( "File " + filename + " could not be saved.\n" + e.toString());
 		}
 		
-		Log.d("ShuffleTone", "Save complete: " + didSave);//TODO - DEBUG CODE
+		log.d( "Save complete: " + didSave);//TODO - DEBUG CODE
 		
 		return didSave;
 	}	
@@ -162,35 +163,36 @@ public class PlaylistIO
 	public static synchronized RingtonePlaylist loadPlaylist(Context context, String filename)
 	{
 		boolean didLoad = false;
+		Log log = new Log(context);
 		RingtonePlaylist playlist = new RingtonePlaylist();
 		
 		try{
 			if(!checkFolder())
 				throw new IOException();
 
-			Log.d("ShuffleTone", "Preparing to load");//TODO - DEBUG CODE
+			log.d( "Preparing to load");//TODO - DEBUG CODE
 			
 			//With the magic of serializable interface, we unflatten the RingtonePlaylist object
 				//at the given file location
 			FileInputStream in = new FileInputStream(filename);
 			ObjectInputStream objectStream = new ObjectInputStream(in);	
-			Log.d("ShuffleTone", "Stream Size: " + in.available() + " bytes");
+			log.d( "Stream Size: " + in.available() + " bytes");
 			playlist = (RingtonePlaylist) objectStream.readObject();
-			Log.d("ShuffleTone", "Playlist size: " + playlist.size());
+			log.d( "Playlist size: " + playlist.size());
 			objectStream.close();
 			in.close();
 			didLoad = true;
 		} catch (ClassNotFoundException e) { 
-			Log.e("ShuffleTone", "Failed to typecast.\n" + e.toString()); 
+			log.e( "Failed to typecast.\n" + e.toString()); 
 		} catch (FileNotFoundException e) {
-			Log.e("ShuffleTone", "File " + filename + " could not be found.\n" + e.toString()); 
+			log.e( "File " + filename + " could not be found.\n" + e.toString()); 
 		} catch (StreamCorruptedException e) {
-			Log.e("ShuffleTone", "Object Stream is corrupted\n" + e.toString());
+			log.e( "Object Stream is corrupted\n" + e.toString());
 		} catch (IOException e) {
-			Log.e("ShuffleTone", "Failed to load " + filename +".\n" + e.toString()); 
+			log.e( "Failed to load " + filename +".\n" + e.toString()); 
 		}	
 		
-		Log.d("ShuffleTone", "Load complete: " + didLoad);//TODO - DEBUG CODE
+		log.d( "Load complete: " + didLoad);//TODO - DEBUG CODE
 		return playlist;
 	}
 	

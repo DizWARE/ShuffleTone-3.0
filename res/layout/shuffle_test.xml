@@ -229,6 +229,15 @@
 		        android:text="@string/debug_note"
 		        android:textAppearance="?android:attr/textAppearanceMedium"
 		        android:textColor="@color/White" />
+		    
+		    <TextView
+		        android:id="@+id/tv_log"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_alignLeft="@+id/tv_notification"
+		        android:layout_below="@+id/tv_debugNote"
+		        android:textAppearance="?android:attr/textAppearanceMedium"
+		        android:textColor="@color/White" />
 		
 		    
         </RelativeLayout>

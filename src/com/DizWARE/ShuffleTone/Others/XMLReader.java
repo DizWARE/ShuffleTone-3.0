@@ -9,7 +9,6 @@ import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
 
 import android.os.Environment;
-import android.util.Log;
 
 /***
  * Class that allows reading XML documents that start with <RingtonePlaylist> 
@@ -103,7 +102,6 @@ public class XMLReader
         		eventType = xml.next();
         	}catch(Exception e)
         	{
-        		Log.d("ShuffleTone", "Failed to read next xml tag");
         	}
         }
         

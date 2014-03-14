@@ -3,6 +3,8 @@ package com.DizWARE.ShuffleTone.Services;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import com.DizWARE.ShuffleTone.Others.Log;
+
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -11,7 +13,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.IBinder;
-import android.util.Log;
 
 /***
  * Watches for a change in the SMS content. If there is, cancel the ringtone
@@ -48,7 +49,7 @@ public class MessageWatch extends Service
 		int tempUnread = unreadCount;
 		int tempTotal = messageCount;
 		ShuffleService.postNotification(this);
-		Log.d("ShuffleTone", "Launching Notification");
+		Log.d(this, "Launching Notification");
 		//Counts our messages and unread messages. If our count is the same as what we had before the call, we are probably in the 
 			//Conversation that this message belongs to; Stop the ringtone and stop this service if wea are in the conversation
 		countUnread();			
