@@ -40,6 +40,7 @@ public class ShuffleTest extends Activity implements Runnable
 	
 	Button btn_shuffle;
 	Button btn_message;
+	Button btn_sendLog;
 	
 	ToggleButton tb_power;
 	ToggleButton tb_notification;
@@ -70,6 +71,7 @@ public class ShuffleTest extends Activity implements Runnable
 		//Initialize Buttons
 		btn_shuffle = (Button)this.findViewById(R.id.btn_shuffle);
 		btn_message = (Button)this.findViewById(R.id.btn_message);
+		btn_sendLog = (Button)this.findViewById(R.id.btn_sendLog);
 		
 		//Initialize Toggle Buttons
 		tb_notification = (ToggleButton)this.findViewById(R.id.tb_notification);
@@ -203,6 +205,7 @@ public class ShuffleTest extends Activity implements Runnable
 		tb_debugNote.setChecked(noteType == 2||noteType == 3);
 		tb_power.setChecked(settings.getBoolean(Constants.SETTINGS_TXT_PWR, false));
 		
+		//Listens for changes in the log. When an update comes, we update the visual log
 		logReceiver = new BroadcastReceiver() 
 		{
 			@Override public void onReceive(Context context, Intent intent) 
@@ -212,7 +215,27 @@ public class ShuffleTest extends Activity implements Runnable
 		};	
 		this.registerReceiver(logReceiver, new IntentFilter("com.DizWARE.ShuffleTone.Log.Update"));
 		
+		//Initialize the log with the current log
 		tv_log.setText(settings.getString("log", ""));
+		
+		btn_sendLog.setOnClickListener(new OnClickListener()
+		{			
+			@Override public void onClick(View v)
+			{
+				/* Create the Intent */  
+				   final Intent emailIntent = new Intent(Intent.ACTION_SEND);  
+				     
+				   /* Fill it with Data */  
+				   emailIntent.setType("plain/text");  
+				   emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{"dizware@gmail.com"});  
+				   emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "ShuffleTone 3.0 Log");  
+				   emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, settings.getString("log", ""));  
+				   
+				  
+				   /* Send it off to the Activity-Chooser */  
+				   ShuffleTest.this.startActivity(Intent.createChooser(emailIntent, "Send mail..."));  
+			}
+		});
 	}
 	
 	/***

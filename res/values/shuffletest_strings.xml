@@ -14,5 +14,7 @@
     <string name="none">None</string>
     <string name="warning">Warning: Turn your messaging notification ringtone to silent</string>
     <string name="message_btn">Send Test Text Message</string>
+    <string name="send_log">Send Log To Dev</string>
+    <string name="log_title">Activity Log</string>
     
 </resources>

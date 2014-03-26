@@ -230,13 +230,33 @@
 		        android:textAppearance="?android:attr/textAppearanceMedium"
 		        android:textColor="@color/White" />
 		    
+		    <Button
+		        android:id="@+id/btn_sendLog"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_alignParentRight="true"
+		        android:layout_below="@+id/tv_debugNote"
+		        android:layout_marginTop="15dp"
+		        android:text="@string/send_log" />
+		    
+		   	<TextView
+		         android:id="@+id/tv_logTitle"
+		         android:layout_width="wrap_content"
+		         android:layout_height="wrap_content"
+		         android:layout_alignBottom="@id/btn_sendLog"
+		         android:text="@string/log_title"
+		         android:textAppearance="?android:attr/textAppearanceMedium"
+		         android:textColor="@color/White"
+		         android:textSize="25sp"
+		         android:textStyle="bold"/>
+		    
 		    <TextView
 		        android:id="@+id/tv_log"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
-		        android:layout_alignLeft="@+id/tv_notification"
-		        android:layout_below="@+id/tv_debugNote"
+		        android:layout_below="@+id/btn_sendLog"
 		        android:textAppearance="?android:attr/textAppearanceMedium"
+		        android:layout_marginTop="5dp"
 		        android:textColor="@color/White" />
 		
 		    

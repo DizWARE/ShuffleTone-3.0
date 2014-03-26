@@ -43,6 +43,10 @@ public class PlaylistIO
 			@Override public void run() {
 				boolean didSave = false;
 				Log log = new Log(context);
+				
+				FileOutputStream out;
+				ObjectOutputStream objectStream;
+				
 				while(locked);
 				locked = true;
 				
@@ -53,19 +57,19 @@ public class PlaylistIO
 					log.d("Save started");//TODO - DEBUG CODE
 					
 					//Using the magic of serializable objects, flatten the object and save it to our given file
-					FileOutputStream out = new FileOutputStream(filename);
-					ObjectOutputStream objectStream = new ObjectOutputStream(out);
+					out = new FileOutputStream(filename);
+					objectStream = new ObjectOutputStream(out);
 					objectStream.writeObject(playlist);
 					objectStream.close();
 					out.close();
 					didSave = true;
-					locked = false;
 				} catch (FileNotFoundException e) {
 					log.e("File location " + filename + " was not found\n" + e.toString());
 				} catch (IOException e) {
 					log.e("File " + filename + " could not be saved.\n" + e.toString());
 				}
-
+				
+				locked = false;
 				log.d("Save complete: " + didSave);//TODO - DEBUG CODE
 				
 				context.sendBroadcast(intent);
@@ -113,7 +117,6 @@ public class PlaylistIO
 					objectStream.close();
 					in.close();
 					didLoad = true;
-					locked = false;
 				} catch (ClassNotFoundException e) { 
 					log.e("Failed to typecast.\n" + e.toString()); 
 				} catch (FileNotFoundException e) {
@@ -124,6 +127,8 @@ public class PlaylistIO
 					log.e( "Failed to load " + filename +".\n" + e.toString()); 
 				}				
 
+				locked = false;
+				
 				log.d("Load complete: " + didLoad);//TODO - DEBUG CODE
 				intent.putExtra("didLoad", didLoad);
 				
@@ -136,6 +141,10 @@ public class PlaylistIO
 	{
 		boolean didSave = false;
 		Log log = new Log(context);
+		
+		while(locked);
+		locked = true;
+		
 		try {
 			if(!checkFolder())
 				throw new IOException();
@@ -154,7 +163,8 @@ public class PlaylistIO
 		} catch (IOException e) {
 			log.e( "File " + filename + " could not be saved.\n" + e.toString());
 		}
-		
+
+		locked = false;
 		log.d( "Save complete: " + didSave);//TODO - DEBUG CODE
 		
 		return didSave;
@@ -165,6 +175,8 @@ public class PlaylistIO
 		boolean didLoad = false;
 		Log log = new Log(context);
 		RingtonePlaylist playlist = new RingtonePlaylist();
+		while(locked);
+		locked = true;
 		
 		try{
 			if(!checkFolder())
@@ -177,6 +189,7 @@ public class PlaylistIO
 			FileInputStream in = new FileInputStream(filename);
 			ObjectInputStream objectStream = new ObjectInputStream(in);	
 			log.d( "Stream Size: " + in.available() + " bytes");
+			
 			playlist = (RingtonePlaylist) objectStream.readObject();
 			log.d( "Playlist size: " + playlist.size());
 			objectStream.close();
@@ -191,7 +204,8 @@ public class PlaylistIO
 		} catch (IOException e) {
 			log.e( "Failed to load " + filename +".\n" + e.toString()); 
 		}	
-		
+
+		locked = false;
 		log.d( "Load complete: " + didLoad);//TODO - DEBUG CODE
 		return playlist;
 	}

@@ -103,7 +103,7 @@ public class AppSettings
 			     
 			   /* Fill it with Data */  
 			   emailIntent.setType("plain/text");  
-			   emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{"tydiz936@gmail.com"});  
+			   emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{"dizware@gmail.com"});  
 			   emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "ShuffleTone 3.0");  
 			  
 			   /* Send it off to the Activity-Chooser */  
