@@ -34,6 +34,7 @@ import com.DizWARE.ShuffleTone.Others.Constants;
 import com.DizWARE.ShuffleTone.Others.PlaylistIO;
 import com.DizWARE.ShuffleTone.Others.PreferenceWriter;
 import com.DizWARE.ShuffleTone.Services.ShuffleService;
+import com.android.vending.billing.Base64DecoderException;
 
 /***
  * Main Activity of the application. Portal to all the features in ShuffleTone
@@ -47,6 +48,7 @@ public class MainActivity extends Activity
 	TextView tv_browser;
 	TextView tv_viewCurrent;
 	TextView tv_test;
+	TextView tv_donation;
 	
 	RelativeLayout frameLayout;
 	RelativeLayout rl_title;
@@ -142,6 +144,7 @@ public class MainActivity extends Activity
 		tv_browser = (TextView)sv_content.findViewById(R.id.tv_filebrowser);
 		tv_viewCurrent = (TextView)sv_content.findViewById(R.id.tv_viewCurrent);
 		tv_test = (TextView)sv_content.findViewById(R.id.tv_test);
+		tv_donation = (TextView)sv_content.findViewById(R.id.tv_donation);
 		
 		//Set up and launch the power selection dialog
 		tv_power.setOnClickListener(new OnClickListener(){
@@ -290,6 +293,15 @@ public class MainActivity extends Activity
 			@Override public void onClick(View v) 
 			{
 				Intent intent = new Intent(MainActivity.this, ShuffleTest.class);	
+				MainActivity.this.startActivity(intent);
+			}
+		});
+		
+		tv_donation.setOnClickListener(new OnClickListener() 
+		{			
+			@Override public void onClick(View v) 
+			{
+				Intent intent = new Intent(MainActivity.this, Donation.class);	
 				MainActivity.this.startActivity(intent);
 			}
 		});

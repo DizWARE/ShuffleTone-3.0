@@ -2,8 +2,8 @@
 <manifest 
     xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.DizWARE.ShuffleTone"
-    android:versionName="3.1" 
-    android:versionCode="21" 
+    android:versionName="3.2" 
+    android:versionCode="22" 
     android:installLocation="auto">
 
     <uses-sdk
@@ -18,6 +18,7 @@
 <uses-permission android:name="android.permission.READ_SMS"></uses-permission>
 <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
 <uses-permission android:name="android.permission.VIBRATE"/>
+<uses-permission android:name="com.android.vending.BILLING" />
     
     <application
         android:allowBackup="true"
@@ -55,6 +56,7 @@
 <activity android:name=".Activites.BackupActivity" android:theme="@android:style/Theme.NoTitleBar"></activity>
 <activity android:name=".Activites.ShuffleTest" android:theme="@android:style/Theme.NoTitleBar"></activity>
 <service android:name=".Services.MessageWatch"></service>
+<activity android:name=".Activites.Donation"></activity>
 </application>
 
 

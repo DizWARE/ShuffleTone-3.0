@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fillViewport="true" >
+   <LinearLayout
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:orientation="vertical"
+	    android:padding="5dip" >
+
+	    <TextView android:layout_width="wrap_content"
+	        	  android:layout_height="wrap_content"
+	        	  android:text="@string/donate_agreement1"
+	        	  android:textSize="24sp"/>
+	    <TextView android:layout_width="wrap_content"
+	        	  android:layout_height="wrap_content"
+	        	  android:text="@string/donate_agreement2"
+	        	  android:textSize="14sp"/>
+	    <TextView android:layout_width="wrap_content"
+	        	  android:layout_height="wrap_content"
+	        	  android:text="@string/donate_agreement3"
+	        	  android:textStyle="bold"
+	        	  android:textSize="18sp"/>
+		<TextView android:layout_width="wrap_content"
+	        	  android:layout_height="wrap_content"
+	        	  android:text="@string/donate_agreement4"
+	        	  android:textStyle="bold"
+	        	  android:textSize="14sp"/>
+	    <TextView
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/donate_agreement5"
+	        android:textSize="14sp" />
+	
+	    <TextView android:layout_width="wrap_content"
+	        	  android:layout_height="wrap_content"
+	        	  android:text="@string/donate_agreement6"
+	        	  android:layout_marginTop="5dip"
+	        	  android:textStyle="bold"
+	        	  android:textSize="14sp"/>	
+	    <LinearLayout
+	        style="android:style/ButtonBar"
+	        android:layout_height="wrap_content"
+	        android:layout_width = "match_parent"
+	        android:gravity="center"
+	        android:padding="10dip"
+	        android:orientation="horizontal" >
+	    	
+	    	<Button
+	        	android:id="@+id/btn_donate_1"
+	        	android:layout_height="wrap_content"
+	        	android:layout_width = "wrap_content"
+	        	android:layout_weight="1"
+	        	android:text="@string/donate_1" />
+	    	<Button
+	        	android:id="@+id/btn_donate_5"
+	    	    android:layout_height="wrap_content"
+	        	android:layout_width = "wrap_content"
+	        	android:layout_weight="1"
+	        	android:text="@string/donate_5" />
+	    	<Button
+	        	android:id="@+id/btn_donate_10"
+	    	    android:layout_height="wrap_content"
+	        	android:layout_width = "wrap_content"
+	        	android:layout_weight="1"
+	        	android:text="@string/donate_10" />
+	    	<Button
+	        	android:id="@+id/btn_donate_15"
+	    	    android:layout_height="wrap_content"
+	        	android:layout_width = "wrap_content"
+	        	android:layout_weight="1"
+	        	android:text="@string/donate_15" />
+	    </LinearLayout>
+	
+	    <TextView android:layout_width="wrap_content"
+	        	  android:layout_height="wrap_content"
+	        	  android:text="@string/donate_agreement7"
+	        	  android:layout_marginTop="5dip"
+	        	  android:textSize="14sp"/>
+    </LinearLayout>
+</ScrollView>
+

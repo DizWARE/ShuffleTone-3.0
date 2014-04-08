@@ -16,8 +16,7 @@
 	  	android:text = ">  Turn On/Off ShuffleTone"
 	  	android:textColor = "@android:color/white"
 	  	android:textSize = "24sp"
-	  	android:id = "@+id/tv_powerStation"/>
-	  
+	  	android:id = "@+id/tv_powerStation"/>	  
 	  <TextView 
 	    android:layout_width="wrap_content"
 	  	android:layout_height="wrap_content"
@@ -25,8 +24,7 @@
 	  	android:text = ">  Pick out your tones"
 	  	android:textColor = "@android:color/white"
 	  	android:textSize = "24sp"
-	  	android:id = "@+id/tv_filebrowser"/>
-	  
+	  	android:id = "@+id/tv_filebrowser"/>	  
 	  <TextView 
 	    android:layout_width="wrap_content"
 	  	android:layout_height="wrap_content"
@@ -34,8 +32,7 @@
 	  	android:text = ">  View/Edit current playlist"
 	  	android:textColor = "@android:color/white"
 	  	android:textSize = "24sp"
-	  	android:id = "@+id/tv_viewCurrent"/>
-	  
+	  	android:id = "@+id/tv_viewCurrent"/>	  
 	  <TextView 
 	    android:layout_width="wrap_content"
 	  	android:layout_height="wrap_content"
@@ -43,8 +40,7 @@
 	  	android:text = ">  Backup/Restore a list"
 	  	android:textColor = "@android:color/white"
 	  	android:textSize = "24sp"
-	  	android:id = "@+id/tv_backup"/>
-	  
+	  	android:id = "@+id/tv_backup"/>	  
 	   <TextView
 	     android:id="@+id/tv_test"
 	     style = "@style/MainMarginsLand"
@@ -52,6 +48,14 @@
 	     android:layout_height="wrap_content"
 	     android:text="> Test TextTone Shuffle"
 	     android:textColor="@android:color/white"
-	     android:textSize="24sp" />
+	     android:textSize="24sp" />	   
+  		<TextView
+	      android:id="@+id/tv_donation"
+	      style = "@style/MainMarginsLand"
+	      android:layout_width="wrap_content"
+	      android:layout_height="wrap_content"
+	      android:text=">A message from the Developer"
+	      android:textColor="@android:color/white"
+	      android:textSize="24sp" />
 	</LinearLayout>
 </ScrollView>

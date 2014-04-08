@@ -27,9 +27,17 @@ public class Log extends LinkedList<String>
 	public Log(Context context)
 	{
 		this.context = context;
-		settings = context.getSharedPreferences("settings", 0);
+		this.settings = context.getSharedPreferences("settings", 0);
 		
-		if(log != null)
+		setUp();			
+	}
+	
+	/***
+	 * Set up the log
+	 */
+	public synchronized void setUp()
+	{
+		if(Log.log != null)
 			this.addAll(log);
 		else
 		{
@@ -42,7 +50,6 @@ public class Log extends LinkedList<String>
 			for(String entry : logArray)
 				this.add(entry + "\n\n");
 		}
-			
 	}
 	
 	/***
@@ -57,7 +64,7 @@ public class Log extends LinkedList<String>
 	 * A debug logging method that adds the time/date, adds our logging data, and then adds it to the log
 	 * @param whatToLog
 	 */
-	public void d(String whatToLog)
+	public synchronized void d(String whatToLog)
 	{
 		String newString = DateUtils.formatDateTime(context, 
 				Calendar.getInstance().getTimeInMillis(), 

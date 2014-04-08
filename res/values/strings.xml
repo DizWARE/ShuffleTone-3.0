@@ -10,5 +10,31 @@
 <string name="shuffle_status">Shuffled</string>
 <string name="save_status">Saved</string>
 <string name="note_title">ShuffleTone Playlist Status</string>
+<string name="donate_1">$1</string>
+<string name="donate_5">$5</string>
+<string name="donate_10">$10</string>
+<string name="donate_15">$15</string>
+<string name="donate_agreement1">Dear friends and fans, </string>
+<string name="donate_agreement2">
+You guys are so seriously awesome! 
+\nIn 2009, a small idea was born called ShuffleTone. It barely did anything at all at that point, but hundreds of hours of work, research, 
+and a desire to give you all the best, has moved it forward over the years. 
+Its time for ShuffleTone to take another leap forward, but I need your help. </string>
+<string name="donate_agreement3">\nThis is what to look forward too:</string>
+<string name="donate_agreement4">-Apply ShuffleTone playlists to unlimited number of applications(not just text messaging and calling)
+\n-Apply ShuffleTone playlists to individual contacts for both calls and texts
+\n-An alarm clock using ShuffleTone playlists to wake you up or remind you of important events 
+\n-A ringtone picker to help you set up ShuffleTone without hassle. 
+\n-A brand new user interface, consistent with current Android standards</string>
+<string name="donate_agreement5">\nI\'ve set up a donation system to help fund 
+future development. Please, if you\'ve enjoyed ShuffleTone, and the free service that it has offered, 
+consider helping out. </string>
+<string name="donate_agreement6">Donate Here:</string>
+<string name="donate_agreement7">If a donation is not possible, don\'t worry about it. 
+Tell your friends about ShuffleTone; You may even want to brag about it a little. 
+Help them find happiness in randomness :)
+\n\nYou may be wondering why I would just now request help. I am getting married this summer, 
+and am in the process of finishing school right now. A lot of time is going into homework, or when I 
+can find the time, working to provide for my future family. Thank you so much for supporting ShuffleTone. You truly are the best!\n\n-Tyler - DizWARE\n</string>
 
 </resources>
