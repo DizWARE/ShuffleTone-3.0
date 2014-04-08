@@ -60,8 +60,12 @@
 		      style="@style/MainMargins"
 		      android:layout_width="wrap_content"
 		      android:layout_height="wrap_content"
+		      android:shadowColor="#ff2211"
+		      android:shadowDx="4"
+		      android:shadowDy="4"
+		      android:shadowRadius="2"
 		      android:text=">A message from the Developer"
-		      android:textColor="@android:color/white"
+		      android:textColor="@color/White"
 		      android:textSize="24dip" />
 
 	  </LinearLayout>

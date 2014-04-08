@@ -78,6 +78,7 @@ public class Donation extends Activity
 			      {
 			    	  Toast.makeText(Donation.this, "Donation setup failed.", 
 								Toast.LENGTH_LONG).show();
+			    	  for(Button b : donateButtons) b.setEnabled(false);
 			         return;
 			      }            				        
 			   }
@@ -87,6 +88,7 @@ public class Donation extends Activity
 		{
 			Toast.makeText(this, "Could not decode public key\nWill not be able to do in-app purchases", 
 					Toast.LENGTH_LONG).show();
+			for(Button b : donateButtons) b.setEnabled(false);
 			e.printStackTrace();
 		}
 	}
@@ -95,9 +97,7 @@ public class Donation extends Activity
 	 * Sets up the donation buttons with the correct amounts.
 	 */
 	public void setupButtons()
-	{
-		
-		
+	{		
 		for(int i = 0; i < 4; i++)
 		{
 			donateButtons[i].setTag(i);
@@ -126,6 +126,10 @@ public class Donation extends Activity
 		}
 	}
 	
+	/***
+	 * Handles the in-app completion. If the user cancels, accepts, or any other situation, this will report
+	 * the result properly 
+	 */
 	@Override protected void onActivityResult(int requestCode, int resultCode, Intent data)
 	{		
 	    // Pass on the activity result to the helper for handling
