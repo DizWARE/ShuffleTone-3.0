@@ -190,6 +190,10 @@ public class ShuffleService extends Service implements Runnable
 			RingtoneManager.setActualDefaultRingtoneUri(this, ringerType, next.getURI());
 			duration = next.getDuration();
 			
+			boolean checkSettings = intent.getBooleanExtra(SettingTags.checkSettings.toString(), true);
+			if((notification == NOTE_ON||notification ==DEBUG_SOUND) && this.ringerType == Constants.TYPE_TEXTS && checkSettings)
+				ShuffleService.postNotification(this);
+			
 			log.d( "Set Ringtone " + next.toString());//TODO - DEBUG CODE
 		}
 		else

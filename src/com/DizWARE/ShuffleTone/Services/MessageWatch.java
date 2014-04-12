@@ -48,7 +48,7 @@ public class MessageWatch extends Service
 	{
 		int tempUnread = unreadCount;
 		int tempTotal = messageCount;
-		ShuffleService.postNotification(this);
+
 		Log.d(this, "Launching Notification");
 		//Counts our messages and unread messages. If our count is the same as what we had before the call, we are probably in the 
 			//Conversation that this message belongs to; Stop the ringtone and stop this service if wea are in the conversation
